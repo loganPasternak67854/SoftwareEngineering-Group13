@@ -9,7 +9,7 @@
 
 # Data Operations:
 
-Priority scale (1pts→5pts)
+**Priority scale (1pts→5pts)**
 5pts=highest priority
 1pts=lowest priority
 
