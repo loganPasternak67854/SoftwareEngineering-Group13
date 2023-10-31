@@ -1,3 +1,5 @@
+//CONTRIBUTION OF LOGAN PASTERNAK START 
+
 CREATE DATABASE GoodsWebsiteDatabase;--Contributed by Logan Pasternak
 Use GoodsWebsiteDatabase;
 DEFAULT CHARACTER SET = 'utf8mb4';
@@ -91,3 +93,5 @@ SELECT * FROM TRACKING
 
 --Show completion data associated with a specific user
 SELECT * FROM COMPLETION
+
+//CONTRIBUTION OF LOGAN PASTERNAK END
