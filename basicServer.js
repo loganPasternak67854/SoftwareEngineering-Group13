@@ -1,6 +1,7 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+//CONTRIBUTION OF LOGAN PASTERNAK START
+import express from 'express'
+
+import { getUSERS, getPRODUCTS, getCARTS, getTRACKINGS, getCOMPLETES, getUSER, getPRODUCT, getCART, getTRACKING, getCOMPLETE, createUSER, createPRODUCT, createCART, createTRACKING, createCOMPLETION} from './database';
 
 // Define a basic route
 app.get('/', (req, res) => {
@@ -11,3 +12,4 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+//CONTRIBUTION OF LOGAN PASTERNAK END
