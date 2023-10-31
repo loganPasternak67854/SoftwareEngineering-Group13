@@ -1,3 +1,4 @@
+// CONTRIBUTION OF LOGAN PASTERNAK START 
 import mysql from 'mysql2';
 
 import dotenv from 'dotenv';
@@ -14,7 +15,7 @@ const pool = mysql.createPool({
 }).promise()
 
 //Gets all the users from the database
-async function getUSERS(){
+export async function getUSERS(){
 
     const [rows] = await pool.query("SELECT * FROM USERS");
     return rows
@@ -22,7 +23,7 @@ async function getUSERS(){
 }
 
 //Gets all the Products from the Database
-async function getPRODUCTS(){
+export async function getPRODUCTS(){
 
     const [rows] = await pool.query("SELECT * FROM PRODUCTS");
     return rows
@@ -30,7 +31,7 @@ async function getPRODUCTS(){
 }
 
 //Gets all the Tracking Information
-async function getTRACKINGS(){
+export async function getTRACKINGS(){
 
     const [rows] = await pool.query("SELECT * FROM TRACKING");
     return rows
@@ -38,7 +39,7 @@ async function getTRACKINGS(){
 }
 
 //Gets all the Carts
-async function getCARTS(){
+export async function getCARTS(){
 
     const [rows] = await pool.query("SELECT * FROM CART");
     return rows
@@ -46,7 +47,7 @@ async function getCARTS(){
 }
 
 //Gets all the completion entities
-async function getCOMPLETES(){
+export async function getCOMPLETES(){
 
     const [rows] = await pool.query("SELECT * FROM COMPLETE");
     return rows
@@ -54,70 +55,70 @@ async function getCOMPLETES(){
 }
 
 //Picks out a specific user's information
-async function getUSER(id)
+export async function getUSER(id)
 {
     const[rows]=await pool.query(`SELECT * FROM USERS WHERE userID = ?`, [id])
     return rows[0];
 }
 
 //Picks out a specific product's information
-async function getPRODUCT(id)
+export async function getPRODUCT(id)
 {
     const[rows]=await pool.query(`SELECT * FROM PRODUCTS WHERE productID = ?`, [id])
     return rows[0];
 }
 
 //Picks out a specific cart's information
-async function getCART(id)
+export async function getCART(id)
 {
     const[rows]=await pool.query(`SELECT * FROM CART WHERE userID = ?`, [id])
     return rows[0];
 }
 
 //Picks out a specific tracking entity and its information
-async function getTRACKING(id)
+export async function getTRACKING(id)
 {
     const[rows]=await pool.query(`SELECT * FROM TRACKING WHERE trackerID = ?`, [id])
     return rows[0];
 }
 
 //Picks out a specific completion entity and its information
-async function getCOMPLETE(id)
+export async function getCOMPLETE(id)
 {
     const[rows]=await pool.query(`SELECT * FROM COMPLETE WHERE completionID = ?`, [id])
     return rows[0];
 }
 
 //Creats a user entity
-async function createUSER(userName,userAddress,userEmail,userPhone,trackingCODE)
+export async function createUSER(userName,userAddress,userEmail,userPhone,trackingCODE)
 {
     const [result] = await pool.query(`INSERT INTO USERS (userName,userAddress,userEmail,userPhone,trackingCODE) VALUES (?,?,?,?,?)`,
     [userName,userAddress,userEmail,userPhone,trackingCODE]) 
 }
 
 //Creats a product entity
-async function createPRODUCT(productName,productDescription,discountCategory,productPrice)
+export async function createPRODUCT(productName,productDescription,discountCategory,productPrice)
 {
     const [result] = await pool.query(`INSERT INTO PRODUCT (productName,productDescription,discountCategory,productPrice) VALUES (?,?,?,?)`,
     [productName,productDescription,discountCategory,productPrice]) 
 }
 
 //Creats a cart entity
-async function createCART(userID,productID,numProducts)
+export async function createCART(userID,productID,numProducts)
 {
     const [result] = await pool.query(`INSERT INTO CART (userID,productID,numProducts) VALUES (?,?,?)`,
     [userID,productID,numProducts]) 
 }
 
 //Creats a tracking entity
-async function createTRACKING(userID,orderStatus,shippingStatus,shippingProvider)
+export async function createTRACKING(userID,orderStatus,shippingStatus,shippingProvider)
 {
     const [result] = await pool.query(`INSERT INTO TRACKING (userID,orderStatus,shippingStatus,shippingProvider) VALUES (?,?,?,?)`,
     [userID,orderStatus,shippingStatus,shippingProvider]) 
 }
 
 //Creats a completion entity
-async function createCOMPLETION(trackerID,completionMessage,completionConfirmation,opinionQuery)
+export async function createCOMPLETION(trackerID,completionMessage,completionConfirmation,opinionQuery)
 {
     const [result] = await pool.query(`INSERT INTO COMPLETION (trackerID,completionMessage,completionConfirmation,opinionQuery) VALUES (?,?,?,?)`,
     [trackerID,completionMessage,completionConfirmation,opinionQuery]) 
@@ -125,5 +126,7 @@ async function createCOMPLETION(trackerID,completionMessage,completionConfirmati
 
 //Code to test functions
 //await createUSER('test','test','test','996-999-9999','3HZ040');
-const result = await getUSERS();
+const result = await getCARTS();
 console.log(result);
+
+//CONTRUTION END
