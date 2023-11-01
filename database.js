@@ -69,7 +69,24 @@ export async function getUSERNAME(id)
     const[rows]=await pool.query(`SELECT userName FROM USERS WHERE userID = ?`, [id]);
     return rows[0];
 }
+
+//Get login username
+
+export async function getUSER_LOGIN_USERNAME(id)
+{
+
+    const[rows]=await pool.query(`SELECT loginUsername FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
+//Get login password
  
+export async function getUSER_LOGIN_PASSWORD(id)
+{
+
+    const[rows]=await pool.query(`SELECT loginPassword FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
 
 //Gets a specific user's home address
 
@@ -244,10 +261,10 @@ export async function getCOMPLETE_OPINIONQUERY(id)
 }
 
 //Posts a user entity
-export async function createUSER(userName,userAddress,userEmail,userPhone,trackingCODE)
+export async function createUSER(userName,loginUsername,loginPassword,userAddress,userEmail,userPhone,trackingCODE)
 {
-    const [result] = await pool.query(`INSERT INTO USERS (userName,userAddress,userEmail,userPhone,trackingCODE) VALUES (?,?,?,?,?)`,
-    [userName,userAddress,userEmail,userPhone,trackingCODE]) 
+    const [result] = await pool.query(`INSERT INTO USERS (userName,loginUsername,loginPassword,userAddress,userEmail,userPhone,trackingCODE) VALUES (?,?,?,?,?,?,?)`,
+    [userName,loginUsername,loginPassword,userAddress,userEmail,userPhone,trackingCODE]) 
 }
 
 //Posts a product entity
@@ -325,12 +342,14 @@ export async function deleteCOMPLETION(id)
 }
 
 //Updates a specific user's information
-export async function updateUSER(id,userName,userAddress,userEmail,userPhone,trackingCODE)
+export async function updateUSER(id,userName,loginUsername,loginPassword,userAddress,userEmail,userPhone,trackingCODE)
 {
     try
     {
         
         await pool.query(`UPDATE USERS SET userName = ? WHERE userID = ?`,[userName,id]);
+        await pool.query(`UPDATE USERS SET loginUsername = ? WHERE userID = ?`,[loginUsername,id]);
+        await pool.query(`UPDATE USERS SET loginPassword = ? WHERE userID = ?`, [loginPassword,id]);
         await pool.query(`UPDATE USERS SET userAddress = ? WHERE userID = ?`,[userAddress,id]);
         await pool.query(`UPDATE USERS SET userEmail = ? WHERE userID = ?`,[userEmail,id]);
         await pool.query(`UPDATE USERS SET userPhone = ? WHERE userID = ?`,[userPhone,id]);
@@ -350,6 +369,36 @@ export async function updateUSERNAME(id,userName)
     try
     {
         await pool.query(`UPDATE USERS SET userName = ? WHERE userID = ?`,[userName,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Update a specific person's username
+
+export async function updateUSER_LOGIN_USERNAME(id,loginUsername)
+{
+    try
+    {
+        await pool.query(`UPDATE USERS SET loginUsername = ? WHERE userID = ?`,[loginUsername,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Update a specific person's password
+
+export async function updateUSER_LOGIN_PASSWORD(id,loginPassword)
+{
+    try
+    {
+        await pool.query(`UPDATE USERS SET loginPassword = ? WHERE userID = ?`,[loginPassword,id]);
         return true;
     }
     catch(error)
