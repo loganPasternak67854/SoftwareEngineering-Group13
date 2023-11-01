@@ -3,7 +3,9 @@ DEFAULT CHARACTER SET = 'utf8mb4';
 --This is the user entity 
 CREATE TABLE USERS(
     userID INT AUTO_INCREMENT PRIMARY KEY, 
-    userName VARCHAR(255) NOT NULL, 
+    userName VARCHAR(255) NOT NULL,
+    loginUsername VARCHAR (255),
+    loginPassword VARCHAR (255),
     userAddress VARCHAR(255) NOT NULL,
     userEmail VARCHAR(255) UNIQUE NOT NULL, 
     userPhone VARCHAR(255) UNIQUE NOT NULL, 
@@ -31,6 +33,15 @@ CREATE TABLE CART(
      
 );
 
+CREATE TABLE CreditCard (
+    CardID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT,
+    cardNumber VARCHAR(16),
+    expirationDate VARCHAR(7),
+    CVV VARCHAR(3),
+    FOREIGN KEY (userID) REFERENCES USERS(userID)
+);
+
 --Package tracking database
 CREATE TABLE TRACKING(
     trackerID INT AUTO_INCREMENT PRIMARY KEY, 
@@ -54,6 +65,17 @@ CREATE TABLE COMPLETE(
 ALTER TABLE PRODUCTS
 ADD discountAmount INT;
 
+UPDATE USERS SET loginUsername = 'temp_username';
+
+UPDATE USERS SET loginPassword = 'temp_password';
+
+
+ALTER TABLE USERS
+ADD loginUsername VARCHAR (255);
+
+ALTER TABLE USERS
+ADD loginPassword VARCHAR (255);
+
 ALTER TABLE CART
 ADD totalPrice DECIMAL(10,2) NOT NULL;
 
@@ -68,12 +90,12 @@ DELETE FROM TRACKING;
 DELETE FROM COMPLETE;
 
 --Puts data into Users table
-INSERT INTO USERS (userName,userAddress,userEmail,userPhone,trackingCode)
+INSERT INTO USERS (userName,loginUsername,loginPassword,userAddress,userEmail,userPhone,trackingCode)
 VALUES
-    ('Alice', '123 Elm St', 'alice@example.com', '555-123-4567', 'A1B2C3'),
-    ('Bob', '789 Oak Dr', 'bob@gmail.com', '777-888-9999', 'B4O5B6'),
-    ('Michael', '789 Pine Rd', 'michael@example.com', '555-555-5555', 'M9P8QZ'),
-    ('Emily', '101 Redwood Ave', 'emily@gmail.com', '111-222-3333', 'E7R2W1');
+    ('Alice','temp','temp', '123 Elm St', 'alice@example.com', '555-123-4567', 'A1B2C3'),
+    ('Bob','buffy','tuffy', '789 Oak Dr', 'bob@gmail.com', '777-888-9999', 'B4O5B6'),
+    ('Michael','tubularBells','password', '789 Pine Rd', 'michael@example.com', '555-555-5555', 'M9P8QZ'),
+    ('Emily','CocoPuffs','josh918', '101 Redwood Ave', 'emily@gmail.com', '111-222-3333', 'E7R2W1');
 
 --Puts data into Products table
 INSERT INTO PRODUCTS(productName,productDescription,discountCategory, discountAmount, productPrice)
