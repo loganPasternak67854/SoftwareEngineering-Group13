@@ -1,7 +1,4 @@
-//CONTRIBUTION OF LOGAN PASTERNAK START 
-
-CREATE DATABASE GoodsWebsiteDatabase;--Contributed by Logan Pasternak
-Use GoodsWebsiteDatabase;
+USE GoodsWebsiteDatabase;--Contributed by Logan Pasternak
 DEFAULT CHARACTER SET = 'utf8mb4';
 --This is the user entity 
 CREATE TABLE USERS(
@@ -17,7 +14,8 @@ CREATE TABLE PRODUCTS(
     productID INT AUTO_INCREMENT PRIMARY KEY,
     productName VARCHAR(255) NOT NULL, 
     productDescription TEXT, 
-    discountCategory ENUM('ENABLED','DISABLED') NOT NULL, 
+    discountCategory ENUM('ENABLED','DISABLED') NOT NULL,
+    discountAmount INT, 
     productPrice DECIMAL(10,2) NOT NULL
 );
 
@@ -27,8 +25,10 @@ CREATE TABLE CART(
     userID INT, 
     productID INT, 
     numProducts INT NOT NULL,
+    totalPrice DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (userID) REFERENCES USERS(userID), 
-    FOREIGN KEY (productID) REFERENCES PRODUCTS(productID) 
+    FOREIGN KEY (productID) REFERENCES PRODUCTS(productID)
+     
 );
 
 --Package tracking database
@@ -51,6 +51,22 @@ CREATE TABLE COMPLETE(
     opinionQuery ENUM('1','2','3','4','5','6','7','8','9','10') NOT NULL 
 );
 
+ALTER TABLE PRODUCTS
+ADD discountAmount INT;
+
+ALTER TABLE CART
+ADD totalPrice DECIMAL(10,2) NOT NULL;
+
+DELETE FROM USERS;
+
+DELETE FROM PRODUCTS;
+
+DELETE FROM CART;
+
+DELETE FROM TRACKING;
+
+DELETE FROM COMPLETE;
+
 --Puts data into Users table
 INSERT INTO USERS (userName,userAddress,userEmail,userPhone,trackingCode)
 VALUES
@@ -60,24 +76,38 @@ VALUES
     ('Emily', '101 Redwood Ave', 'emily@gmail.com', '111-222-3333', 'E7R2W1');
 
 --Puts data into Products table
-INSERT INTO PRODUCTS(productName,productDescription,discountCategory,productPrice)
+INSERT INTO PRODUCTS(productName,productDescription,discountCategory, discountAmount, productPrice)
 VALUES
-    ('Laptop', 'High-performance laptop', 'DISABLED', 799.99),
-    ('Coffee Maker', 'Automatic coffee machine', 'ENABLED', 49.99),
-    ('Smartphone', 'High-end mobile device', 'DISABLED', 499.99),
-    ('Headphones', 'Wireless noise-canceling headphones', 'DISABLED', 149.99);
+    ('Laptop', 'High-performance laptop', 'DISABLED', 20, 799.99),
+    ('Coffee Maker', 'Automatic coffee machine', 'ENABLED', 0, 49.99),
+    ('Smartphone', 'High-end mobile device', 'DISABLED', 60, 499.99),
+    ('Headphones', 'Wireless noise-canceling headphones', 'DISABLED', 30, 149.99);
 
 --Puts data into Cart table
-INSERT INTO CART(userID,productID,numProducts)
-VALUES(1,1,1);
+INSERT INTO CART(userID,productID,numProducts, totalPrice)
+VALUES
+    (17,7,2,10.00),
+    (17,6,2,10.00),
+    (18,8,1,499.99),
+    (19,9,1,149.99);
+
+
 
 --Puts data into Tracking table
 INSERT INTO TRACKING(userID,orderStatus,shippingStatus,shippingProvider)
-VALUES(1,'IN PROGRESS','ASSEMBLY','HoalinOats');
+VALUES
+    (17,'IN PROGRESS','ASSEMBLY','HoalinOats'),
+    (18,'IN PROGRESS', 'SHIPPING', 'UPS'),
+    (19,'CANCELED','COMPLETE','temp'),
+    (20,'NO ORDER', 'COMPLETE', 'temp');
 
 --Puts data into Complete table
 INSERT INTO COMPLETE(trackerID, completionMessage, completionConfirmation, opinionQuery)
-VALUES(1,'IN PROGRESS','INCOMPLETE','6');
+VALUES
+    (14,'PACKAGE ON ITS WAY','INCOMPLETE','6'),
+    (15,'PACKAGE ON ITS WAY', 'INCOMPLETE', '2'),
+    (16,'NaN','INCOMPLETE','1'),
+    (17,'NaN','INCOMPLETE','4');
 
 --Show User data in a table format
 SELECT * FROM USERS
