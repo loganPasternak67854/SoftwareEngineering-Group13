@@ -116,7 +116,7 @@ export async function getPRODUCT(id)
 
 //Get a product's name
 
-export async function getPRODUCTNAME(id)
+export async function getPRODUCT_NAME(id)
 {
 
     const[rows]=await pool.query(`SELECT productName FROM PRODUCTS WHERE productID = ?`, [id]);
@@ -125,7 +125,7 @@ export async function getPRODUCTNAME(id)
 
 //Get a project's description
 
-export async function getPRODUCTDESCRIPTION(id)
+export async function getPRODUCT_DESCRIPTION(id)
 {
 
     const[rows]=await pool.query(`SELECT productDescription FROM PRODUCTS WHERE productID = ?`, [id]);
@@ -134,7 +134,7 @@ export async function getPRODUCTDESCRIPTION(id)
 
 //Get a product's discountCategory
 
-export async function getPRODUCTDISCOUNT(id)
+export async function getPRODUCT_DISCOUNT(id)
 {
 
     const[rows]=await pool.query(`SELECT discountCategory FROM PRODUCTS WHERE productID = ?`, [id]);
@@ -143,10 +143,19 @@ export async function getPRODUCTDISCOUNT(id)
 
 //Get a product's price
 
-export async function getPRODUCTPRICE(id)
+export async function getPRODUCT_PRICE(id)
 {
 
     const[rows]=await pool.query(`SELECT productPrice FROM PRODUCTS WHERE productID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a product's discount amount
+
+export async function getPRODUCT_DISCOUNT_AMOUNT(id)
+{
+
+    const[rows]=await pool.query(`SELECT discountAmount FROM PRODUCTS WHERE productID = ?`, [id]);
     return rows[0];
 }
 
@@ -160,9 +169,15 @@ export async function getCART(id)
 
 
 //Get the number of products for a 
-export async function getNUMPRODUCTS(id)
+export async function getCART_NUMPRODUCTS(id)
 {
     const[rows]=await pool.query(`SELECT numProducts FROM CART WHERE cartID = ?`, [id])
+    return rows[0];
+}
+
+export async function getCART_TOTAL_PRICE(id)
+{
+    const[rows]=await pool.query(`SELECT totalPrice FROM CART WHERE cartID = ?`, [id])
     return rows[0];
 }
 
@@ -236,17 +251,17 @@ export async function createUSER(userName,userAddress,userEmail,userPhone,tracki
 }
 
 //Posts a product entity
-export async function createPRODUCT(productName,productDescription,discountCategory,productPrice)
+export async function createPRODUCT(productName,productDescription,discountCategory,discountAmount,productPrice)
 {
-    const [result] = await pool.query(`INSERT INTO PRODUCT (productName,productDescription,discountCategory,productPrice) VALUES (?,?,?,?)`,
-    [productName,productDescription,discountCategory,productPrice]) 
+    const [result] = await pool.query(`INSERT INTO PRODUCT (productName,productDescription,discountCategory, discountAmount, productPrice) VALUES (?,?,?,?,?)`,
+    [productName,productDescription,discountCategory,discountAmount,productPrice]) 
 }
 
 //Posts a cart entity
-export async function createCART(userID,productID,numProducts)
+export async function createCART(userID,productID,numProducts,totalPrice)
 {
-    const [result] = await pool.query(`INSERT INTO CART (userID,productID,numProducts) VALUES (?,?,?)`,
-    [userID,productID,numProducts]) 
+    const [result] = await pool.query(`INSERT INTO CART (userID,productID,numProducts,totalPrice) VALUES (?,?,?,?)`,
+    [userID,productID,numProducts,totalPrice]) 
 }
 
 
@@ -404,13 +419,14 @@ export async function updateCODE(id,trackingCODE)
 }
 
 //Updates a specific user's information
-export async function updatePRODUCT(id,productName,productDescription,discountCategory,productPrice)
+export async function updatePRODUCT(id,productName,productDescription,discountCategory,discountAmount,productPrice)
 {
     try
     {
         await pool.query(`UPDATE PRODUCTS SET productName = ? WHERE productID = ?`,[productName,id]);
         await pool.query(`UPDATE PRODUCTS SET productDescription = ? WHERE productID = ?`,[productDescription,id]);
         await pool.query(`UPDATE PRODUCTS SET discountCategory = ? WHERE productID = ?`,[discountCategory,id]);
+        await pool.query(`UPDATE PRODUCTS SET discountAmount = ? WHERE productID = ?`, [discountAmount,id]);
         await pool.query(`UPDATE PRODUCTS SET productPrice = ? WHERE productID = ?`,[productPrice,id]);
         return true;
     }
@@ -465,6 +481,21 @@ export async function updatePRODUCT_DISCOUNT(id,discountCategory)
     }
 }
 
+//UPDATE THE AMOUNT OF A DISCOUNT
+
+export async function updatePRODUCT_DISCOUNT_AMOUNT(id,discountAmount)
+{
+    try
+    {
+        await pool.query(`UPDATE PRODUCTS SET discountAmount = ? WHERE productID = ?`,[discountAmount,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
 //Update a product's price
 
 export async function updatePRODUCT_PRICE(id,productPrice)
@@ -481,11 +512,12 @@ export async function updatePRODUCT_PRICE(id,productPrice)
 }
 
 //Updates a specific user's information
-export async function updateCART(id,numProducts)
+export async function updateCART(id,numProducts,totalPrice)
 {
     try
     {   
         await pool.query(`UPDATE CART SET numProducts = ? WHERE cartID = ?`,[numProducts,id]);
+        await pool.query(`UPDATE CART SET totalPrice = ? WHERE cartID = ?`, [totalPrice,id]);
         return true;
     }
     catch(error)
@@ -501,6 +533,21 @@ export async function updateCART_NUMPRODUCTS(id,numProducts)
     try
     {   
         await pool.query(`UPDATE CART SET numProducts = ? WHERE cartID = ?`,[numProducts,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Updates the total price within the cart
+
+export async function updateCART_TOTALPRICE(id,totalPrice)
+{
+    try
+    {   
+        await pool.query(`UPDATE CART SET totalPrice = ? WHERE cartID = ?`,[totalPrice,id]);
         return true;
     }
     catch(error)
@@ -634,6 +681,19 @@ export async function updateCOMPLETE_QUERY(id,opinionQuery)
 
 
 //Code to test functions
+
+//const result = await getTRACKINGS()
+//const result = await getTRACKING_SHIPPINGSTATUS(1);
+
+/*
+const temp = await getTRACKING_SHIPPINGSTATUS(1);
+const result = temp.shippingStatus;
+*/
+
+/*
+const temp = await getTRACKING_SHIPPINGSTATUS(1);
+const result = typeof(temp);
+*/
 //await createUSER('test','test','test','996-999-9999','3HZ040');
 //const result = await getCARTS();
 //console.log(result);
