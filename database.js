@@ -682,6 +682,16 @@ export async function updateCOMPLETE_QUERY(id,opinionQuery)
 
 //Code to test functions
 
+/*
+const result = await getPRODUCTS();
+console.log(result);
+*/
+
+/*
+const result = await getCARTS();
+console.log(result);
+*/
+
 //const result = await getTRACKINGS()
 //const result = await getTRACKING_SHIPPINGSTATUS(1);
 
