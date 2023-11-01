@@ -154,7 +154,15 @@ export async function getPRODUCTPRICE(id)
 //Picks out a specific cart's information
 export async function getCART(id)
 {
-    const[rows]=await pool.query(`SELECT * FROM CART WHERE userID = ?`, [id])
+    const[rows]=await pool.query(`SELECT * FROM CART WHERE cartID = ?`, [id])
+    return rows[0];
+}
+
+
+//Get the number of products for a 
+export async function getNUMPRODUCTS(id)
+{
+    const[rows]=await pool.query(`SELECT numProducts FROM CART WHERE cartID = ?`, [id])
     return rows[0];
 }
 
@@ -165,10 +173,58 @@ export async function getTRACKING(id)
     return rows[0];
 }
 
+//Gets a specific tracking entity's order status
+
+export async function getTRACKING_ORDERSTATUS(id)
+{
+    const[rows]=await pool.query(`SELECT orderStatus FROM TRACKING WHERE trackerID = ?`, [id])
+    return rows[0];
+}
+
+//Gets a specific tracking entity's shipping status
+
+export async function getTRACKING_SHIPPINGSTATUS(id)
+{
+    const[rows]=await pool.query(`SELECT shippingStatus FROM TRACKING WHERE trackerID = ?`, [id])
+    return rows[0];
+}
+
+//Gets a specific tracking entities shipping provider
+
+export async function getTRACKING_SHIPPINGPROVIDER(id)
+{
+    const[rows]=await pool.query(`SELECT shippingProvider FROM TRACKING WHERE trackerID = ?`, [id])
+    return rows[0];
+}
+
 //Picks out a specific completion entity and its information
 export async function getCOMPLETE(id)
 {
     const[rows]=await pool.query(`SELECT * FROM COMPLETE WHERE completionID = ?`, [id])
+    return rows[0];
+}
+
+//Get a specific completion entity's completion message
+
+export async function getCOMPLETE_COMPLETIONMESSAGE(id)
+{
+    const[rows]=await pool.query(`SELECT completionMessage FROM COMPLETE WHERE completionID = ?`, [id])
+    return rows[0];
+}
+
+//Gets a specific completion entity's completion confirmation
+
+export async function getCOMPLETE_COMPLETIONCONFIRMATION(id)
+{
+    const[rows]=await pool.query(`SELECT completionConfirmation FROM COMPLETE WHERE completionID = ?`, [id])
+    return rows[0];
+}
+
+//Gets a specific completion entity's opinion query
+
+export async function getCOMPLETE_OPINIONQUERY(id)
+{
+    const[rows]=await pool.query(`SELECT opinionQuery FROM COMPLETE WHERE completionID = ?`, [id])
     return rows[0];
 }
 
@@ -582,4 +638,4 @@ export async function updateCOMPLETE_QUERY(id,opinionQuery)
 //const result = await getCARTS();
 //console.log(result);
 
-//CONTRUTION END
+//CONTRUTION OF LOGAN PASTERNAK END
