@@ -61,12 +61,95 @@ export async function getUSER(id)
     return rows[0];
 }
 
+//Gets a specific user's username
+
+export async function getUSERNAME(id)
+{
+
+    const[rows]=await pool.query(`SELECT userName FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+ 
+
+//Gets a specific user's home address
+
+export async function getADDRESS(id)
+{
+
+    const[rows]=await pool.query(`SELECT userAddress FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
+//Gets a specific user's email address
+
+export async function getEMAIL(id)
+{
+
+    const[rows]=await pool.query(`SELECT userEmail FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
+//Gets a specific user's phone number
+
+export async function getPHONE(id)
+{
+
+    const[rows]=await pool.query(`SELECT userPhone FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
+//Gets a specific user's tracking code
+
+export async function getCODE(id)
+{
+
+    const[rows]=await pool.query(`SELECT trackingCODE FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
 //Picks out a specific product's information
 export async function getPRODUCT(id)
 {
     const[rows]=await pool.query(`SELECT * FROM PRODUCTS WHERE productID = ?`, [id])
     return rows[0];
 }
+
+//Get a product's name
+
+export async function getPRODUCTNAME(id)
+{
+
+    const[rows]=await pool.query(`SELECT productName FROM PRODUCTS WHERE productID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a project's description
+
+export async function getPRODUCTDESCRIPTION(id)
+{
+
+    const[rows]=await pool.query(`SELECT productDescription FROM PRODUCTS WHERE productID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a product's discountCategory
+
+export async function getPRODUCTDISCOUNT(id)
+{
+
+    const[rows]=await pool.query(`SELECT discountCategory FROM PRODUCTS WHERE productID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a product's price
+
+export async function getPRODUCTPRICE(id)
+{
+
+    const[rows]=await pool.query(`SELECT productPrice FROM PRODUCTS WHERE productID = ?`, [id]);
+    return rows[0];
+}
+
 
 //Picks out a specific cart's information
 export async function getCART(id)
@@ -110,6 +193,7 @@ export async function createCART(userID,productID,numProducts)
     [userID,productID,numProducts]) 
 }
 
+
 //Creats a tracking entity
 export async function createTRACKING(userID,orderStatus,shippingStatus,shippingProvider)
 {
@@ -126,7 +210,7 @@ export async function createCOMPLETION(trackerID,completionMessage,completionCon
 
 //Code to test functions
 //await createUSER('test','test','test','996-999-9999','3HZ040');
-const result = await getCARTS();
-console.log(result);
+//const result = await getCARTS();
+//console.log(result);
 
 //CONTRUTION END
