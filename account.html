@@ -9,16 +9,30 @@
 <body>
     <div class="navBar">
         <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-      <input type="text" placeholder="Search for products in goods.com" />
+        <input type="text" placeholder="Search for products in goods.com" />
         <button type="submit">Search<i class="fa-search"></i></button>
         <div id="listing">
             <ul>
                 <a href="/account.html">Account</a>
                 <a href="/cart.html">Cart</a>
                 <a href="/monitor.html">Your orders</a>
-        
-        
-    </ul>
+            </ul>
+        </div>
     </div>
-      </div>
-    </body>
+
+
+    <div class="login">  
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Login</button>
+    </form>
+    <button id="Sign up">Sign up</button>
+  </div>
+
+
+</body>

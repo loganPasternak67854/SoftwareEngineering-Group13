@@ -171,3 +171,28 @@ float:right;
   padding: 50px;
   margin: 20px;
 }
+
+
+/*For the cart page*/
+
+.checkout-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+
+/*For the login form page*/
+
+form {
+  border: 3px solid #f1f1f1;
+  align-items: center;
+}
+
+.login{
+  width: 500px;
+  padding-left: 200px;
+  padding-top: 10px;
+}

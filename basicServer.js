@@ -45,7 +45,6 @@ app.get('/monitor', (req, res) => {
   res.sendFile('monitor.html', { root: '.' });
 });
 
-
 const orders = [
   { orderId: 1, status: "Pending", totalAmount: 100 },
   { orderId: 2, status: "Shipped", totalAmount: 100 },
@@ -69,6 +68,12 @@ app.get('/product_list', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(products));
 });
+
+app.get('/fetch_cart', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(products));
+});
+
 
 app.get('/cart', (req, res) => {
   // res.sendFile(__dirname+'/index.html');
