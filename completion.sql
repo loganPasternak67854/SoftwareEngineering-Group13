@@ -15,5 +15,5 @@ insert INTO Completion (Completion_id, Completion_Confirmation, Opinion_Query)
 VALUES(
     '1',
     '0',
-    'what is your opinion'
+    'On a scale of 1-10 what is your opinion of the services provided?'
     );
