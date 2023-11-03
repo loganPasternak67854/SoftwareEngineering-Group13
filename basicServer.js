@@ -68,14 +68,30 @@ app.get('/monitor_order', (req, res) => {
 });
 
 
-app.get('/product_list', (req, res) => {
+app.get('/product_list', async (req, res) => {
+  // Dislay 20 list of products from database
+  let productids= [0,1,2,3,4,5];
+  let products=[];
+  for (let i = 0; i < productids.length; i++) {
+    let product= await getPRODUCT(productids[i]);
+    products.push(product);
+  }
+  //console.log(products);
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(products));
 });
 
-app.get('/fetch_cart', (req, res) => {
+app.get('/fetch_cart', async (req, res) => {
+  // Dislay 20 list of products from database
+  let cartids= [6,7,8,9];
+  let carts=[];
+  for (let i = 0; i < cartids.length; i++) {
+    let cart= await getCART(cartids[i]);
+    carts.push(cart);
+  }
+  //console.log(carts);
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify(products));
+  res.end(JSON.stringify(carts));
 });
 
 
