@@ -7,7 +7,7 @@ CREATE TABLE Users (
     Email_Address VARCHAR(255),
     Phone_Number VARCHAR(20)
 );
-
+ 
 CREATE TABLE Products (
  Product_id INT PRIMARY KEY,
     Product_name VARCHAR(255) NOT NULL,
