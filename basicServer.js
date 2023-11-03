@@ -3,17 +3,21 @@
 //CONTRIBUTION OF LOGAN PASTERNAK START
 
 import { createUSER, createPRODUCT, createCART, createTRACKING, createCOMPLETION } from "./database.js";
-import { getUSERS, getUSER, getUSERNAME,getUSER_LOGIN_USERNAME,getUSER_LOGIN_PASSWORD, getEMAIL, getPHONE, getADDRESS, getCODE } from "./database.js";
+import { getUSERS, getUSER, getUSERNAME, getUSER_LOGIN_USERNAME,getUSER_LOGIN_PASSWORD, getEMAIL, getPHONE, getADDRESS, getCODE } from "./database.js";
 import { getPRODUCTS, getPRODUCT, getPRODUCT_NAME, getPRODUCT_DESCRIPTION, getPRODUCT_DISCOUNT, getPRODUCT_DISCOUNT_AMOUNT, getPRODUCT_PRICE } from "./database.js";
 import { getCARTS, getCART, getCART_NUMPRODUCTS, getCART_TOTAL_PRICE } from "./database.js";
 import { getTRACKINGS, getTRACKING, getTRACKING_ORDERSTATUS, getTRACKING_SHIPPINGSTATUS, getTRACKING_SHIPPINGPROVIDER } from "./database.js";
 import { getCOMPLETES, getCOMPLETE, getCOMPLETE_COMPLETIONMESSAGE, getCOMPLETE_COMPLETIONCONFIRMATION, getCOMPLETE_OPINIONQUERY } from "./database.js";
 import { deleteUSER, deletePRODUCT, deleteCART, deleteTRACKING, deleteCOMPLETION } from "./database.js";
-import { updateUSER, updateUSERNAME,updateUSER_LOGIN_USERNAME, updateUSER_LOGIN_PASSWORD, updateADDRESS, updateEMAIL, updatePHONE, updateCODE } from "./database.js";
+import { updateUSER, updateUSERNAME, updateUSER_LOGIN_USERNAME, updateUSER_LOGIN_PASSWORD, updateADDRESS, updateEMAIL, updatePHONE, updateCODE } from "./database.js";
 import { updatePRODUCT, updatePRODUCT_DESCRIPTION, updatePRODUCT_NAME, updatePRODUCT_DISCOUNT, updatePRODUCT_DISCOUNT_AMOUNT, updatePRODUCT_PRICE } from "./database.js";
 import { updateCART, updateCART_NUMPRODUCTS, updateCART_TOTALPRICE } from "./database.js";
 import { updateTRACKING_ORDERSTATUS, updateTRACKING_SHIPPINGSTATUS, updateTRACKING_SHIPPINGPROVIDER } from "./database.js";
 import { updateCOMPLETE, updateCOMPLETE_MESSAGE, updateCOMPLETE_CONFIRMATION, updateCOMPLETE_QUERY } from "./database.js";
+import { getCREDITCARD, getCREDITCARD_SINGLE, getCREDITCARD_NUMBER, getCREDITCARD_EXPIRATION, getCREDITCARD_CVV } from "./database.js";
+import { createCREDITCARD } from "./database.js";
+import { deleteCREDITCARD } from "./database.js";
+import { updateCREDITCARD, updateCREDITCARD_CARDNUMBER, updateCREDITCARD_EXPIRATION, updateCREDITCARD_CVV } from "./database.js";
 
 //CONTRIBUTION OF LOGAN PASTERNAK ENDS
 
