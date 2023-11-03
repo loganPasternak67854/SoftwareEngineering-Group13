@@ -4,6 +4,7 @@ const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 const loginSuccessMsg = document.getElementById("login-success-msg");
+const signUpButton = document.getElementById("signup-button");
 
 loginButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -19,3 +20,29 @@ loginButton.addEventListener("click", (e) => {
         loginErrorMsg.style.opacity = 1;
     }
 })
+
+loginButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (checkExistingUser(username, email)) {
+        return "User already exists. Please choose a different username or email.";
+    }
+    const newUser = {
+        username: username,
+        email: email,
+        password: password,
+    };
+    userAccounts.push(newUser);
+    // alert("Account successfully created.");
+}
+
+function checkExistingUser(username, email) {
+  for (let user of userAccounts) {
+    if (user.username === username || user.email === email) {
+      return true; 
+    }
+  }
+
+  return false; 
+}
+
+const userAccounts = []; // Array to hold user accounts (temporary)
