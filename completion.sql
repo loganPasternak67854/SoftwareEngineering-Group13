@@ -30,11 +30,39 @@ CREATE table Completion(
   Completion_id INT PRIMARY KEY,
   Completion_Confirmation BOOLEAN,
   Opinion_Query VARCHAR(255) NOT NULL,
+  User_id INT,
+  Tracker_id INT,
+  Product_id INT,
   FOREIGN KEY (User_id) REFERENCES Users(User_id),
   FOREIGN KEY (Tracker_id) REFERENCES Tracker(Tracker_id),
   FOREIGN KEY (Product_id) REFERENCES Products(Product_id)   
-) COMMENT '';
+);
 
+
+insert INTO Users (User_id, Name, Address,Email_Address,Phone_Number)
+VALUES(
+    '1',
+    'John',
+    '123 New Street',
+    'john@email.com',
+    '123456789'
+    );
+
+    insert INTO Products (Product_id, Product_name, Product_description, Discount_category)
+VALUES(
+    '1',
+    'toolbox',
+    'Contains various tools',
+    'no discount'
+    );
+
+    insert INTO Tracking (Tracker_id, Order_status, Current_shipping_status, Shipping_provider)
+VALUES(
+    '1',
+    1,
+    'en route',
+    'fast shippers'
+    );
 insert INTO Completion (Completion_id, Completion_Confirmation, Opinion_Query)
 VALUES(
     '1',
