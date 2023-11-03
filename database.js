@@ -1,4 +1,4 @@
-// CONTRIBUTION OF LOGAN PASTERNAK START 
+ // CONTRIBUTION OF LOGAN PASTERNAK START 
 
 import mysql from 'mysql2';
 
@@ -43,6 +43,14 @@ export async function getTRACKINGS(){
 export async function getCARTS(){
 
     const [rows] = await pool.query("SELECT * FROM CART");
+    return rows
+
+}
+
+//Gets all the Credit Card info
+export async function getCREDITCARD(){
+
+    const [rows] = await pool.query("SELECT * FROM CreditCard");
     return rows
 
 }
@@ -122,6 +130,37 @@ export async function getCODE(id)
 {
 
     const[rows]=await pool.query(`SELECT trackingCODE FROM USERS WHERE userID = ?`, [id]);
+    return rows[0];
+}
+
+//Cet a user's credit card information
+
+export async function getCREDITCARD_SINGLE(id)
+{
+    const[rows]=await pool.query(`SELECT * FROM CreditCard WHERE cardID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a user's credit card cardNumber
+export async function getCREDITCARD_NUMBER(id)
+{
+    const[rows]=await pool.query(`SELECT cardNumber FROM CreditCard WHERE cardID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a user's expiration date
+
+export async function getCREDITCARD_EXPIRATION(id)
+{
+    const[rows]=await pool.query(`SELECT expirationDate FROM CreditCard WHERE cardID = ?`, [id]);
+    return rows[0];
+}
+
+//Get a user's CVV 
+
+export async function getCREDITCARD_CVV(id)
+{
+    const[rows]=await pool.query(`SELECT cardNumber CVV FROM CreditCard WHERE cardID = ?`, [id]);
     return rows[0];
 }
 
@@ -290,6 +329,13 @@ export async function createTRACKING(userID,orderStatus,shippingStatus,shippingP
     [userID,orderStatus,shippingStatus,shippingProvider]) 
 }
 
+//Create a credit card entity
+export async function createCREDITCARD(userID,cardNumber,expirationDate,CVV)
+{
+    const [result] = await pool.query(`INSERT INTO CreditCard (userID,cardNumber,expirationDate,CVV) VALUES (?,?,?,?)`,
+    [userID,cardNumber,expirationDate,CVV]) 
+}
+
 //Posts a completion entity
 export async function createCOMPLETION(trackerID,completionMessage,completionConfirmation,opinionQuery)
 {
@@ -324,6 +370,14 @@ export async function deleteCART(id)
 
 }
 
+export async function deleteCREDITCARD(id)
+{
+
+    let [result] = await pool.query(`DELETE FROM CreditCard WHERE cardID = ?`,[id]);
+    return result['affectedRows'];
+
+}
+
 //Deletes a person enetity
 export async function deleteTRACKING(id)
 {
@@ -340,6 +394,69 @@ export async function deleteCOMPLETION(id)
     let [result] = await pool.query(`DELETE FROM COMPLETION WHERE completionID = ?`,[id]);
     return result['affectedRows'];
 
+}
+
+//Updates a specific credit card entity
+
+export async function updateCREDITCARD(id,cardNumber,expirationDate,CVV)
+{
+    try
+    {
+        
+        await pool.query(`UPDATE USERS SET cardNumber = ? WHERE cardID = ?`,[cardNumber,id]);
+        await pool.query(`UPDATE USERS SET expirationDate = ? WHERE cardID = ?`,[expirationDate,id]);
+        await pool.query(`UPDATE USERS SET CVV = ? WHERE cardID = ?`, [CVV,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Updates a specific credit card entity's card number
+
+export async function updateCREDITCARD_CARDNUMBER(id,cardNumber)
+{
+    try
+    {
+        await pool.query(`UPDATE USERS SET cardNumber = ? WHERE cardID = ?`,[cardNumber,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Updates a specific credit card entity's experiation date
+
+export async function updateCREDITCARD_EXPIRATION(id,expirationDate)
+{
+    try
+    {
+        await pool.query(`UPDATE USERS SET expirationDate = ? WHERE cardID = ?`,[expirationDate,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
+}
+
+//Updates a specific credit card entity's CVV
+
+export async function updateCREDITCARD_CVV(id,CVV)
+{
+    try
+    {
+        await pool.query(`UPDATE USERS SET CVV = ? WHERE cardID = ?`, [CVV,id]);
+        return true;
+    }
+    catch(error)
+    {
+        return false;
+    }
 }
 
 //Updates a specific user's information
