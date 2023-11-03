@@ -55,11 +55,11 @@ const orders = [
   { orderId: 3, status: "Pending", totalAmount: 100 },
 ];
 
-const products = [
-  { productId: 1, name: "Lightsaber", description: "A jedi lightsaber", price: 100 },
-  { productId: 2, name: "Blaster", description: "A blaster from star wars", price: 200 },
-  { productId: 3, name: "Droid", description: "A droid from star wars", price: 300 },
-];
+// const sampleproducts = [
+//   { productId: 1, name: "Lightsaber", description: "A jedi lightsaber", price: 100 },
+//   { productId: 2, name: "Blaster", description: "A blaster from star wars", price: 200 },
+//   { productId: 3, name: "Droid", description: "A droid from star wars", price: 300 },
+// ];
 
 app.get('/monitor_order', (req, res) => {
   console.log("monitor_order");
@@ -70,28 +70,27 @@ app.get('/monitor_order', (req, res) => {
 
 app.get('/product_list', async (req, res) => {
   // Dislay 20 list of products from database
-  let productids= [0,1,2,3,4,5];
+  let productids= [1,2,3,4];
   let products=[];
   for (let i = 0; i < productids.length; i++) {
     let product= await getPRODUCT(productids[i]);
     products.push(product);
   }
-  //console.log(products);
+  // console.log(products);
+  // console.log(sampleproducts);
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(products));
 });
 
 app.get('/fetch_cart', async (req, res) => {
-  // Dislay 20 list of products from database
-  let cartids= [6,7,8,9];
-  let carts=[];
-  for (let i = 0; i < cartids.length; i++) {
-    let cart= await getCART(cartids[i]);
-    carts.push(cart);
-  }
-  //console.log(carts);
+  let items= [];
+  let cartID = 5; // Currently works for a cart
+  let carts = await getCART(cartID);
+  let products= await getPRODUCT(carts['productID']);
+  items.push(products);
+  // console.log(products);
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify(carts));
+  res.end(JSON.stringify(items));
 });
 
 
