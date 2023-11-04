@@ -4,6 +4,7 @@
 <head>
     <title>Goods.com</title>
     <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -15,9 +16,9 @@
     <button type="submit">Search<i class="fa-search"></i></button>
     <div id="listing">
         <ul>
-            <a href="/account.html">Account</a>
-            <a href="/cart.html">Cart</a>
-            <a href="/monitor.html">Your orders</a>   
+            <a href="/account.html"><i class="fas fa-user"></i> Account</a>
+            <a href="/cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="/monitor.html">Orders</a> 
         </ul>
     </div>
   </div>
@@ -48,54 +49,81 @@
       </div>
   </div>
 
-
-
-
-
-
-
-
          <div class="Productbar">
 <!--         <h1>Available Products</h1> -->
         <ul id ="product-list">
             <!-- Product items will be displayed here dynamically using JavaScript-->
         </ul>
-        <script> 
-            // Function to fetch orders from the API
+
+        <script>
+            // Function to fetch products from the API
+            function addToCart(productID,productName,price,imageURL) {
+            const userID = 1; // Replace with the actual user ID if needed
+            const numProducts = 1; // You can modify this if you want to add more than one
+            const totalPrice = price * numProducts;
+
+            fetch('/addtocart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type to JSON
+                },
+                body: JSON.stringify({
+                    userID:1,
+                    productID:productID,
+                    productName:productName,
+                    numProducts:1,
+                    totalPrice:totalPrice,
+                    imageURL:imageURL
+                }),
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        alert(`Added ${productName} to the cart successfully`);
+                    } else {
+                        alert(response.error);
+                    }
+                })
+                .catch(error => console.error('Error adding to cart:', error));
+        }
+
             function fetchProducts() {
-                      // Replace 'apiEndpoint' with your actual API endpoint
-                      fetch('/product_list')
-                          .then(response => response.json())
-                          .then(products => {
-                              const ProductList = document.getElementById('product-list');
-                              products.forEach(product => {
-                                  const listItem = document.createElement('li');
-                                  listItem.innerHTML = `
-                                      <div class="product-box">
-                                      <h2>Product name: ${product.productName}</h2>
-                                      <p>Description: ${product.productDescription}</p>
-                                      <div class="product-price">
-                                      <p>Price: $${product.productPrice}</p>
-                                      </div>
-                                      <button id="add-to-cart">Add to Cart</button>
-                                      </div>
-                                      <!-- Add more order details here -->
-                                  `;
-                                  ProductList.appendChild(listItem);
-                              });
-                          })
-                          .catch(error => console.error('Error fetching orders:', error));
-                  }
-                  // Fetch and render order list on page load
-                  fetchProducts();
+                // Replace 'apiEndpoint' with your actual API endpoint
+                fetch('/products')
+                    .then(response => response.json())
+                    .then(products => {
+                        const ProductList = document.getElementById('product-list');
+                        products.forEach(product => {
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `
+                                <div class="product-box">
+                                <h2>Product name: ${product.productName}</h2>
+                                <img src="${product.imageURL}" alt="Product Image" width="150" height="100">
+                                <p>Description: ${product.productDescription}</p>
+                                <div class="product-price">
+                                <p>Price: $${product.productPrice}</p>
+                                </div>
+                                <button id="add-to-cart">Add to Cart</button>
+                                </div>
+                            `;
+                            // Add an event listener to the "Add to Cart" button
+                            const addToCartButton = listItem.querySelector('#add-to-cart');
+                            addToCartButton.addEventListener('click', () => {
+                                alert('Button has been clicked');
+                                addToCart(product.productID,product.productName,product.productPrice,product.imageURL);
+                            });
         
+                            ProductList.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching products:', error));
+            }
+        
+            // Fetch and render product list on page load
+            fetchProducts();
         </script>
+        
 </div>
 
-
-    <script>
-        // JavaScript functionality (e.g., adding to cart, order tracking) will be implemented here
-    </script>
 </body>
 
 </html>
