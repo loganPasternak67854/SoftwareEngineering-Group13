@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Goods.com</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <!-- <script defer src="./login-handle.js"></script> -->
+  </head>
+
+<body>
+    <div class="navBar">
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
+        <input type="text" placeholder="Search for products in goods.com" />
+        <button type="submit">Search<i class="fa-search"></i></button>
+        <div id="listing">
+            <ul>
+                <a href="/account.html">Account</a>
+                <a href="/cart.html">Cart</a>
+                <a href="/monitor.html">Your orders</a>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="login">  
+
+      <div id="login-error-msg-holder">
+        <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+      </div>
+
+      <div id="login-success-msg-holder">
+        <p id="login-success-msg"> Login successful</p>
+      </div>
+
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="login" id="login-submit">Login</button>
+    </form>
+    <button id="Sign-up">Sign up</button>
+  </div>
+  <script src="./login-handle.js"></script>
+
+    <script>
+        document.getElementById('signup-button').addEventListener('click', function() {
+            createAccount(); 
+        });
+    </script>
+
+</body>

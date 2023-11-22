@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Goods.com</title>
+
+    <button onclick="buttonClickHandler()"> Stop watching location </button>
+
+    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <style>
+        #map {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        iframe {
+            max-width: 100%;
+        }
+
+        #details {
+            text-align: center;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+<div id="details"></div>
+
+<script>
+
+var reqCount=0;
+
+const watchId = navigator.geolocation.watchPosition(scrollmap,handleError,options);
+
+function scrollmap(position)
+{
+
+    const {latitude,longitude} = position.coords;
+
+    reqCount++;
+    details.innerHTML += "Latitude:" + latitude + "<br>" + "Longitude:" + longitude + "<br>" + "request count:" + reqCount + "<br>";
+    //Show a map centered at latitude / longitude.
+    map.innerHTML = '<iframe width="700" height="300" src="https://maps.google.com/maps?q='+latitude+','+longitude+'&amp;z=15&amp;output=embed"></iframe>';
+
+
+}
+
+function buttonClickHandler() {
+  // Cancel the updates when the user clicks a button.
+  navigator.geolocation.clearWatch(watchId);
+  console.log("Geolocation updates stopped by the user.");
+}
+
+function handleError(error) {
+  // Display error based on the error code.
+  const { code } = error;
+  switch (code) {
+    case GeolocationPositionError.TIMEOUT:
+      // Handle timeout.
+      break;
+    case GeolocationPositionError.PERMISSION_DENIED:
+      // User denied the request.
+      break;
+    case GeolocationPositionError.POSITION_UNAVAILABLE:
+      // Position not available.
+      break;
+  }
+}
+
+var options = {
+    enableHighAccuracy: false,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+
+</script>
+
+</body>
+
+</html>

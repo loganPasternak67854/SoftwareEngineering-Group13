@@ -1,4 +1,4 @@
-// CONTRIBUTION OF LOGAN PASTERNAK START 
+ // CONTRIBUTION OF LOGAN PASTERNAK START 
 
 import mysql from 'mysql2';
 
@@ -871,7 +871,26 @@ const result = temp.shippingStatus;
 const temp = await getTRACKING_SHIPPINGSTATUS(1);
 const result = typeof(temp);
 */
-//await createUSER('test','test','test','996-999-9999','3HZ040');
+
+
+
+/*
+const result = await getPRODUCTS();
+console.log(result);
+*/
+
+
+
+///const temp = await createUSER( 'Alice','temp','temp', '123 Elm St', 'bumblbee.com', '999887', 'ljdddd');
+
+
+
+const result = await getUSERS();
+console.log(result);
+
+
+
+
 //const result = await getCARTS();
 //console.log(result);
 

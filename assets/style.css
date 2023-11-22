@@ -1,0 +1,232 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+
+#logo {
+display: inline-block;
+margin: 10px; /* margin: 20px was off */
+float: left;
+height: 50px;
+width: auto; /* correct proportions to specified height */
+border-radius: 50%; /* makes it a circle */
+}
+
+
+.navBar{
+background-color:#232F3E;
+height:70px;
+color:white;
+padding-top: 10px;
+}
+
+.navBar input{
+padding-top: 10px;
+padding-left: 20px;
+font-size: 15px;
+border: 2px solid grey;
+float: left;
+width: 60%;
+height: 50%;
+background: #f1f1f1;}
+
+.navBar button{
+float: left;
+width: 5%;
+padding: 11px;
+background: #2196F3;
+color: white;
+font-size: 15px;
+border: 1px solid grey;
+border-left: none; /* Prevent double borders */
+cursor: pointer;
+}
+
+.navBar a {
+  text-decoration: none;
+  background: none;
+  margin:10px;
+  padding: 10px;
+  color: white;
+  float: right;
+}
+
+
+input[type=text], input[type=password] {
+
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+
+.product {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+}
+
+.productbar{
+float: right;
+
+
+}
+
+.product img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+
+.sidenav {
+ height: 100%; /*Full-height: remove this if you want "auto" height */
+width: 25%; /* Set the width of the sidebar */
+/*position: fixed;  Fixed Sidebar (stay in place on scroll) */
+z-index: 1; /* Stay on top */
+top: 0; /* Stay at the top */
+left: 0;
+float: left;
+background-color: #FCF7F6; 
+overflow-x: hidden; /* Disable horizontal scroll */
+padding-top: 5px;
+padding-left: 10px;
+text-align: center;
+}
+
+/* The navigation menu links */
+.sidenav a {
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+}
+
+/* Main class for float*/
+.LowerBody{
+  display: flex;
+}
+
+/* For the products in mainpage*/
+
+.Productbar{
+width: 800px;
+float:right;
+}
+
+
+.product-box {
+  background-color:None;
+  width: 90%;
+  border-top: 1px solid gray;
+  padding: 30px;
+  margin: 10px;
+}
+
+.product-details {
+  flex: 2;
+}
+
+.product-price {
+  flex: 1;
+  text-align: right;
+}
+
+
+/* For the Monitor page */
+
+
+
+.OrderContainer{
+  width: 800px;
+}
+
+.order-box {
+  background-color: white;
+  width: 90%;
+  border: 2px solid gray;
+  padding: 50px;
+  margin: 20px;
+}
+
+
+/*For the cart page*/
+
+.checkout-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+
+/*For the login form page*/
+
+form {
+  border: 3px solid #f1f1f1;
+  align-items: center;
+}
+
+.login{
+  width: 500px;
+  padding-left: 200px;
+  padding-top: 10px;
+}
+
+
+#login-error-msg-holder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+#login-error-msg {
+  width: 23%;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8a0000;
+  border: 1px solid #8a0000;
+  background-color: #e58f8f;
+  opacity: 0;
+}
+
+#login-success-msg {
+  width: 23%;
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: green;
+  border: 1px solid greenyellow;
+  opacity: 0;
+}
