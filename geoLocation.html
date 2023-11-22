@@ -7,6 +7,7 @@
     <button onclick="buttonClickHandler()"> Stop watching location </button>
 
     <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    
     <style>
         #map {
             display: flex;
@@ -25,6 +26,7 @@
 
         
     </style>
+    
 </head>
 
 <body>
@@ -40,14 +42,23 @@ const watchId = navigator.geolocation.watchPosition(scrollmap,handleError,option
 
 function scrollmap(position)
 {
-
+  //USE OPTION+COMMAND+C TO VIEW CONSOLE AND SEE OUTPUTS IN BROWSER
     const {latitude,longitude} = position.coords;
 
-    reqCount++;
-    details.innerHTML += "Latitude:" + latitude + "<br>" + "Longitude:" + longitude + "<br>" + "request count:" + reqCount + "<br>";
+    console.log("Latitude: ");
+    console.log(latitude);
+    console.log("\n");
+    console.log("Longitude: ");
+    console.log(longitude);
+    console.log("\n");
+
     //Show a map centered at latitude / longitude.
     map.innerHTML = '<iframe width="700" height="300" src="https://maps.google.com/maps?q='+latitude+','+longitude+'&amp;z=15&amp;output=embed"></iframe>';
 
+    reqCount++;
+    details.innerHTML = "Latitude:" + latitude + "<br>";
+    details.innerHTML = "Longitude:" + longitude + "<br>"; 
+    details.innerHTML = "request count:" + reqCount;
 
 }
 
