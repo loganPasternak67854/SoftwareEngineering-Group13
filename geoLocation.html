@@ -4,24 +4,36 @@
 <head>
     <title>Goods.com</title>
 
-    <button onclick="buttonClickHandler()"> Stop watching location </button>
-
     <link rel="stylesheet" type="text/css" href="assets/style.css"/>
     
     <style>
-        #map {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
 
-        iframe {
-            max-width: 100%;
-        }
+       #trackingId 
+       {
+        width: 600px; /* Adjust the width as needed */
+       }
 
-        #details {
+        #map 
+        {
             text-align: center;
+        }
+
+        iframe 
+        {
+            max-width: 100%;
+            width: 100vh;
+            height: 50vh;
+        }
+
+        #details 
+        {
+          text-align: center;
+        }
+
+        #stopButton 
+        {
+          text-align: center;
+        
         }
 
         
@@ -31,14 +43,64 @@
 
 <body>
 
+<div class="navBar">
+    <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
+
+    <input type="text" id="trackingId" placeholder="Enter Tracking ID" />
+    <button type="button" onclick="startTracking()">Start Tracking</button>
+
+    <!--
+      <input type="text" placeholder="Search for products in goods.com" />
+    <button type="submit">Search<i class="fa-search"></i></button>
+    -->
+
+    <div id="listing">
+        <ul>
+            <a href="/account.html">Account</a>
+            <a href="/cart.html">Cart</a>
+            <a href="/monitor.html">Your orders</a>
+            <a href="/index.html"> Main </a>
+            <a href="/geoLocation.html"> Tracking </a>
+        </ul>
+    </div>
+</div>
+
+<br>
+
 <div id="map"></div>
+
+<div id="stopButton">
+  <button onclick="buttonClickHandler()">Stop watching location</button>
+</div>
+
 <div id="details"></div>
+
 
 <script>
 
 var reqCount=0;
 
-const watchId = navigator.geolocation.watchPosition(scrollmap,handleError,options);
+//Need to supply tracking id before proceeding to find package location
+//Doesn't yet require a specific tracking id associated with the individual
+function startTracking() 
+{
+
+  var trackingId = document.getElementById("trackingId").value;
+
+  if (trackingId) 
+  {
+    console.log("Geolocation updates started with Tracking ID: " + trackingId);
+    
+    watchId = navigator.geolocation.watchPosition(scrollmap, handleError, options);
+
+  } 
+  else 
+  {
+    alert("Please enter a Tracking ID before starting tracking.");
+  }
+}
+
+//const watchId = navigator.geolocation.watchPosition(scrollmap,handleError,options);
 
 function scrollmap(position)
 {
@@ -51,14 +113,12 @@ function scrollmap(position)
     console.log("Longitude: ");
     console.log(longitude);
     console.log("\n");
-
+    
     //Show a map centered at latitude / longitude.
     map.innerHTML = '<iframe width="700" height="300" src="https://maps.google.com/maps?q='+latitude+','+longitude+'&amp;z=15&amp;output=embed"></iframe>';
 
     reqCount++;
-    details.innerHTML = "Latitude:" + latitude + "<br>";
-    details.innerHTML = "Longitude:" + longitude + "<br>"; 
-    details.innerHTML = "request count:" + reqCount;
+    details.innerHTML = "Latitude:" + latitude + "<br>"+"Longitude:" + longitude + "<br>" + "request count:" + reqCount;
 
 }
 

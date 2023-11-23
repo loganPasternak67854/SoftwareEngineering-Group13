@@ -4,6 +4,16 @@
 <head>
     <title>Goods.com</title>
     <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+
+    <style>
+
+        #searchBar 
+        {
+         width: 600px; /* Adjust the width as needed */
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -11,13 +21,15 @@
 
   <div class="navBar">
     <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-  <input type="text" placeholder="Search for products in goods.com" />
+  <input type="text" id="searchBar" placeholder="Search for products in goods.com" />
     <button type="submit">Search<i class="fa-search"></i></button>
     <div id="listing">
         <ul>
             <a href="/account.html">Account</a>
             <a href="/cart.html">Cart</a>
             <a href="/monitor.html">Your orders</a>   
+            <a href="/index.html"> Main </a>
+            <a href="/geoLocation.html">Tracking</a>
         </ul>
     </div>
   </div>
