@@ -5,7 +5,7 @@ CREATE TABLE USERS(
     userID INT AUTO_INCREMENT PRIMARY KEY, 
     userName VARCHAR(255) NOT NULL,
     loginUsername VARCHAR (255),
-    loginPassword VARCHAR (255),
+    loginPassword VARCHAR (255) UNIQUE NOT NULL,
     userAddress VARCHAR(255) NOT NULL,
     userEmail VARCHAR(255) UNIQUE NOT NULL, 
     userPhone VARCHAR(255) UNIQUE NOT NULL, 
@@ -67,7 +67,18 @@ ADD discountAmount INT;
 
 UPDATE USERS SET loginUsername = 'temp_username';
 
-UPDATE USERS SET loginPassword = 'temp_password';
+-- Reset auto-increment counter for MySQL
+ALTER TABLE USERS AUTO_INCREMENT = 1;
+
+ALTER TABLE PRODUCTS AUTO_INCREMENT = 1;
+
+ALTER TABLE CART AUTO_INCREMENT = 1;
+
+ALTER TABLE CreditCard AUTO_INCREMENT = 1;
+
+ALTER TABLE TRACKING AUTO_INCREMENT = 1;
+
+ALTER TABLE COMPLETE AUTO_INCREMENT = 1;
 
 
 ALTER TABLE USERS
@@ -84,6 +95,8 @@ DELETE FROM USERS;
 DELETE FROM PRODUCTS;
 
 DELETE FROM CART;
+
+DELETE FROM CreditCard;
 
 DELETE FROM TRACKING;
 
@@ -108,28 +121,35 @@ VALUES
 --Puts data into Cart table
 INSERT INTO CART(userID,productID,numProducts, totalPrice)
 VALUES
-    (17,7,2,10.00),
-    (17,6,2,10.00),
-    (18,8,1,499.99),
-    (19,9,1,149.99);
+    (1,1,2,10.00),
+    (1,2,2,10.00),
+    (2,3,1,499.99),
+    (3,4,1,149.99);
 
+
+INSERT INTO CreditCard (userID, cardNumber, expirationDate, CVV) 
+VALUES
+    (1, '1234567890123456', '12/25', '123'),
+    (2, '9876543210987654', '05/23', '456'),
+    (3, '1111222233334444', '08/24', '789'),
+    (4, '5555666677778888', '02/22', '555');
 
 
 --Puts data into Tracking table
 INSERT INTO TRACKING(userID,orderStatus,shippingStatus,shippingProvider)
 VALUES
-    (17,'IN PROGRESS','ASSEMBLY','HoalinOats'),
-    (18,'IN PROGRESS', 'SHIPPING', 'UPS'),
-    (19,'CANCELED','COMPLETE','temp'),
-    (20,'NO ORDER', 'COMPLETE', 'temp');
+    (1,'IN PROGRESS','ASSEMBLY','HoalinOats'),
+    (2,'IN PROGRESS', 'SHIPPING', 'UPS'),
+    (3,'CANCELED','COMPLETE','temp'),
+    (4,'NO ORDER', 'COMPLETE', 'temp');
 
 --Puts data into Complete table
 INSERT INTO COMPLETE(trackerID, completionMessage, completionConfirmation, opinionQuery)
 VALUES
-    (14,'PACKAGE ON ITS WAY','INCOMPLETE','6'),
-    (15,'PACKAGE ON ITS WAY', 'INCOMPLETE', '2'),
-    (16,'NaN','INCOMPLETE','1'),
-    (17,'NaN','INCOMPLETE','4');
+    (1,'PACKAGE ON ITS WAY','INCOMPLETE','6'),
+    (2,'PACKAGE ON ITS WAY', 'INCOMPLETE', '2'),
+    (3,'NaN','INCOMPLETE','1'),
+    (4,'NaN','INCOMPLETE','4');
 
 --Show User data in a table format
 SELECT * FROM USERS
