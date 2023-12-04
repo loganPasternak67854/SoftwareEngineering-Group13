@@ -310,7 +310,7 @@ export async function createUSER(userName,loginUsername,loginPassword,userAddres
 //Posts a product entity
 export async function createPRODUCT(productName,productDescription,discountCategory,discountAmount,productPrice)
 {
-    const [result] = await pool.query(`INSERT INTO PRODUCT (productName,productDescription,discountCategory, discountAmount, productPrice) VALUES (?,?,?,?,?)`,
+    const [result] = await pool.query(`INSERT INTO PRODUCTS (productName,productDescription,discountCategory, discountAmount, productPrice) VALUES (?,?,?,?,?)`,
     [productName,productDescription,discountCategory,discountAmount,productPrice]) 
 }
 
@@ -849,49 +849,44 @@ export async function updateCOMPLETE_QUERY(id,opinionQuery)
 
 //Code to test functions
 
+
+//const temp = await createUSER( 'Alice','temp','temp', '123 Elm St', 'arbies.com', '7767767', 'xdxd22');
+
+
 /*
-const result = await getPRODUCTS();
+const result = await getUSER(17);
 console.log(result);
 */
 
 /*
-const result = await getCARTS();
-console.log(result);
-*/
-
-//const result = await getTRACKINGS()
-//const result = await getTRACKING_SHIPPINGSTATUS(1);
-
-/*
-const temp = await getTRACKING_SHIPPINGSTATUS(1);
-const result = temp.shippingStatus;
-*/
-
-/*
-const temp = await getTRACKING_SHIPPINGSTATUS(1);
-const result = typeof(temp);
-*/
-
-
-
-/*
-const result = await getPRODUCTS();
-console.log(result);
-*/
-
-
-
-///const temp = await createUSER( 'Alice','temp','temp', '123 Elm St', 'bumblbee.com', '999887', 'ljdddd');
-
-
-
 const result = await getUSERS();
 console.log(result);
+*/
 
 
+//const temp = await createPRODUCT('Barbie','Its a doll','ENABLED',20,19.99);
 
 
-//const result = await getCARTS();
-//console.log(result);
+/*
+const result = await getPRODUCT(6);
+console.log(result);
+*/
+
+/*
+const result = await getPRODUCTS();
+console.log(result);
+*/
+
+
+//const temp = await createCART(26,10,1,19.99);
+
+
+/*
+const temp = updateUSER(17,'Rubert','dandy','chest','whowho','coco','7452224185','X89221');
+*/
+
+
+//const temp = updatePRODUCT(6,'Chew Toy','Chew toy for pets','DISABLED',0,2.99);
+
 
 //CONTRUTION OF LOGAN PASTERNAK END
