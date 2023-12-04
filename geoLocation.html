@@ -82,22 +82,33 @@ var reqCount=0;
 
 //Need to supply tracking id before proceeding to find package location
 //Doesn't yet require a specific tracking id associated with the individual
-function startTracking() 
-{
+async function startTracking() {
+    var trackingId = document.getElementById("trackingId").value;
 
-  var trackingId = document.getElementById("trackingId").value;
+    if (trackingId) {
+        try {
+            // Use fetch to get tracking codes from the server
+            const response = await fetch('/trackingCODES');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-  if (trackingId) 
-  {
-    console.log("Geolocation updates started with Tracking ID: " + trackingId);
-    
-    watchId = navigator.geolocation.watchPosition(scrollmap, handleError, options);
+            const trackingCodes = await response.json();
 
-  } 
-  else 
-  {
-    alert("Please enter a Tracking ID before starting tracking.");
-  }
+            if (trackingCodes.includes(trackingId)) {
+                console.log("Geolocation updates started with Tracking ID: " + trackingId);
+                watchId = navigator.geolocation.watchPosition(position => scrollmap(position, trackingCodes), handleError, options);
+            } else {
+                alert("Invalid Tracking ID. Please enter a valid Tracking ID.");
+            }
+        } catch (error) {
+            console.error("Error fetching tracking codes:", error);
+            alert("Error fetching tracking codes. Please try again.");
+        }
+    } else {
+        alert("Please enter a Tracking ID before starting tracking.");
+    }
 }
 
 //const watchId = navigator.geolocation.watchPosition(scrollmap,handleError,options);
