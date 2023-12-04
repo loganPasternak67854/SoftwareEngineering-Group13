@@ -12,7 +12,7 @@ import { deleteUSER, deletePRODUCT, deleteCART, deleteTRACKING, deleteCOMPLETION
 import { updateUSER, updateUSERNAME, updateUSER_LOGIN_USERNAME, updateUSER_LOGIN_PASSWORD, updateADDRESS, updateEMAIL, updatePHONE, updateCODE } from "./database.js";
 import { updatePRODUCT, updatePRODUCT_DESCRIPTION, updatePRODUCT_NAME, updatePRODUCT_DISCOUNT, updatePRODUCT_DISCOUNT_AMOUNT, updatePRODUCT_PRICE } from "./database.js";
 import { updateCART, updateCART_NUMPRODUCTS, updateCART_TOTALPRICE } from "./database.js";
-import { updateTRACKING_ORDERSTATUS, updateTRACKING_SHIPPINGSTATUS, updateTRACKING_SHIPPINGPROVIDER } from "./database.js";
+import { updateTRACKING, updateTRACKING_ORDERSTATUS, updateTRACKING_SHIPPINGSTATUS, updateTRACKING_SHIPPINGPROVIDER } from "./database.js";
 import { updateCOMPLETE, updateCOMPLETE_MESSAGE, updateCOMPLETE_CONFIRMATION, updateCOMPLETE_QUERY } from "./database.js";
 import { getCREDITCARD, getCREDITCARD_SINGLE, getCREDITCARD_NUMBER, getCREDITCARD_EXPIRATION, getCREDITCARD_CVV } from "./database.js";
 import { createCREDITCARD } from "./database.js";
@@ -67,10 +67,36 @@ app.get('/monitor_order', (req, res) => {
   res.end(JSON.stringify(orders));
 });
 
+// Add a new route for fetching trackingCODES
+app.get('/trackingCODES', async (req, res) => {
+  try {
+    // Call the getUSERS function from your database module
+    const users = await getUSERS();
+
+    const trackingCodes = [];
+
+    for (let i = 0; i < users.length; i++) 
+    {
+      const user = users[i];
+      const trackingCode = user.trackingCODE;
+      trackingCodes.push(trackingCode);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(trackingCodes))
+    
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.get('/product_list', async (req, res) => {
   // Dislay 20 list of products from database
-  let productids= [6,7,8,9];
+  let productids= [1,2,3,4];
   let products=[];
   for (let i = 0; i < productids.length; i++) {
     let product= await getPRODUCT(productids[i]);
@@ -84,7 +110,7 @@ app.get('/product_list', async (req, res) => {
 
 app.get('/fetch_cart', async (req, res) => {
   let items= [];
-  let cartID = 6; // Currently works for a cart
+  let cartID = 1; // Currently works for a cart
   let carts = await getCART(cartID);
   let products= await getPRODUCT(carts['productID']);
   items.push(products);
