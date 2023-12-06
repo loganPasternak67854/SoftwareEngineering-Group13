@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Goods.com</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+
+    <style>
+
+        #searchBar 
+        {
+         width: 600px; /* Adjust the width as needed */
+        }
+
+        .navBar input[type="text"] {
+          width: 600px;
+      }
+
+    </style>
+    
+</head>
+
+<body>
+    <div class="navBar">
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
+      <input type="text" placeholder="Search for products in goods.com" />
+        <button type="submit">Search<i class="fa-search"></i></button>
+        <div id="listing">
+            <ul>
+                <a href="/account.html">Account</a>
+                <a href="/cart.html">Cart</a>
+                <a href="/monitor.html">Your orders</a>
+                <a href="/index.html"> Main </a>
+                <a href="/geoLocation.html"> Tracking </a>        
+              </ul>
+          </div>
+    </div>
+
+    <h1>User IDs</h1>
+    <div id="userID"></div>
+  
+    <h1>Order Status</h1>
+    <div id="orderStatus"></div>
+
+    <h1>Shipping Status</h1>
+    <div id="shippingStatus"></div>
+
+    <h1>Completion Confirmation</h1>
+    <div id="completion"></div>
+
+  <script>
+    async function fetchOrderStatus() {
+      try {
+        const response = await fetch('/orderStatus');
+        const data = await response.json();
+        const user1 = data[0];
+
+        document.getElementById('orderStatus').innerText = JSON.stringify(user1);
+
+        //document.getElementById('orderStatus').innerText = JSON.stringify(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function fetchShippingStatus() {
+      try {
+        const response = await fetch('/shippingStatus');
+        const data = await response.json();
+        const user1 = data[0];
+
+        document.getElementById('shippingStatus').innerText = JSON.stringify(user1);
+        //document.getElementById('shippingStatus').innerText = JSON.stringify(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function fetchUserID() {
+      try {
+        const response = await fetch('/userID');
+        const data = await response.json();
+        const user1 = data[0];
+
+        document.getElementById('userID').innerText = JSON.stringify(user1);
+        //document.getElementById('userID').innerText = JSON.stringify(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function fetchConfirmation() {
+      try {
+        const response = await fetch('/completionConfirmation');
+        const data = await response.json();
+        const user1 = data[0];
+
+        document.getElementById('completion').innerText = JSON.stringify(user1);
+        //document.getElementById('userID').innerText = JSON.stringify(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Execute both fetch requests independently
+    fetchOrderStatus();
+    fetchShippingStatus();
+    fetchUserID();
+    fetchConfirmation();
+  </script>
+</body>
+</html>
