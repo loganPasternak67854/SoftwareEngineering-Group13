@@ -44,16 +44,22 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: '.' });
 });
 
+/*
 app.get('/monitor', (req, res) => {
   // res.sendFile(__dirname+'/index.html');
   res.sendFile('monitor.html', { root: '.' });
+  
 });
+*/
 
+/*
 const orders = [
   { orderId: 1, status: "Pending", totalAmount: 100 },
   { orderId: 2, status: "Shipped", totalAmount: 100 },
   { orderId: 3, status: "Pending", totalAmount: 100 },
 ];
+*/
+
 
 // const sampleproducts = [
 //   { productId: 1, name: "Lightsaber", description: "A jedi lightsaber", price: 100 },
@@ -61,11 +67,93 @@ const orders = [
 //   { productId: 3, name: "Droid", description: "A droid from star wars", price: 300 },
 // ];
 
+app.get('/orderStatus', async(req, res) => {
+
+  try {
+    // Call the getUSERS function from your database module
+    const tracking = await getTRACKINGS();
+
+    const orderStats = [];
+
+    for (let i = 0; i < tracking.length; i++) 
+    {
+      const temp = tracking[i];
+      const status = temp.orderStatus;
+      orderStats.push(status);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(orderStats))
+
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+  });
+
+app.get('/completionConfirmation', async(req, res) => {
+
+  try {
+    // Call the getUSERS function from your database module
+    const completion = await getCOMPLETES();
+
+    const completionConfirmation = [];
+
+    for (let i = 0; i < completion.length; i++) 
+    {
+      const temp = completion[i];
+      const status = temp.completionConfirmation;
+      completionConfirmation.push(status);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(completionConfirmation))
+
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+  });
+
+  app.get('/shippingStatus', async(req, res) => {
+
+    try {
+      // Call the getUSERS function from your database module
+      const shipping = await getTRACKINGS();
+  
+      const shippingStatus = [];
+  
+      for (let i = 0; i < shipping.length; i++) 
+      {
+        const temp = shipping[i];
+        const status = temp.shippingStatus;
+        shippingStatus.push(status);
+      }
+  
+      // Send the response as JSON
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(shippingStatus))
+  
+    } catch (error) {
+      // Handle errors and send an error response
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  
+    });
+
 app.get('/monitor_order', (req, res) => {
-  console.log("monitor_order");
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify(orders));
+
+  res.sendFile('status.html', { root: '.' });
+
 });
+
 
 // Add a new route for fetching trackingCODES
 app.get('/trackingCODES', async (req, res) => {
@@ -85,7 +173,32 @@ app.get('/trackingCODES', async (req, res) => {
     // Send the response as JSON
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(trackingCodes))
-    
+
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/userID', async (req, res) => {
+  try {
+    // Call the getUSERS function from your database module
+    const users = await getUSERS();
+
+    const userID = [];
+
+    for (let i = 0; i < users.length; i++) 
+    {
+      const temp = users[i];
+      const iD = temp.userID;
+      userID.push(iD);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(userID))
+
   } catch (error) {
     // Handle errors and send an error response
     console.error(error);
