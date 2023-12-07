@@ -29,7 +29,7 @@
             <ul>
                 <a href="/account.html">Account</a>
                 <a href="/cart.html">Cart</a>
-                <a href="/monitor.html">Your orders</a>
+                <a href="/status.html">Your orders</a>
                 <a href="/index.html"> Main </a>
                 <a href="/geoLocation.html"> Tracking </a>        
               </ul>
@@ -45,68 +45,122 @@
     <h1>Shipping Status</h1>
     <div id="shippingStatus"></div>
 
+    <h1>Tracking Code</h1>
+    <div id="trackingCode"></div>
+
     <h1>Completion Confirmation</h1>
     <div id="completion"></div>
 
   <script>
-    async function fetchOrderStatus() {
-      try {
-        const response = await fetch('/orderStatus');
-        const data = await response.json();
-        const user1 = data[0];
+    async function fetchStatus() {
 
-        document.getElementById('orderStatus').innerText = JSON.stringify(user1);
+    let orderStatus, shippingStatus, userID, completionConfirmation, trackingCode;
+
+    // Attempt to get the orderStatus from the database
+    try 
+    {
+        //Get the orderStatus from the database
+        const response1 = await fetch('/orderStatus');
+        const data1 = await response1.json();
+        orderStatus = data1[0];
+
+        //document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
 
         //document.getElementById('orderStatus').innerText = JSON.stringify(data);
-      } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error(error);
-      }
     }
 
-    async function fetchShippingStatus() {
-      try {
-        const response = await fetch('/shippingStatus');
-        const data = await response.json();
-        const user1 = data[0];
+    // Attempt to get the shippingStatus from the database
+    try 
+    {
+        const response2 = await fetch('/shippingStatus');
+        const data2 = await response2.json();
+        shippingStatus = data2[0];
 
-        document.getElementById('shippingStatus').innerText = JSON.stringify(user1);
+        //document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
         //document.getElementById('shippingStatus').innerText = JSON.stringify(data);
-      } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error(error);
-      }
     }
 
-    async function fetchUserID() {
-      try {
-        const response = await fetch('/userID');
-        const data = await response.json();
-        const user1 = data[0];
+    // Attempt to get the userID
+    try 
+    {
+        const response3 = await fetch('/userID');
+        const data3 = await response3.json();
+        userID = data3[0];
 
-        document.getElementById('userID').innerText = JSON.stringify(user1);
+        //document.getElementById('userID').innerText = JSON.stringify(userID);
         //document.getElementById('userID').innerText = JSON.stringify(data);
-      } catch (error) {
+    } 
+    catch (error)
+    {
         console.error(error);
-      }
     }
 
-    async function fetchConfirmation() {
-      try {
-        const response = await fetch('/completionConfirmation');
-        const data = await response.json();
-        const user1 = data[0];
+    //Attempt to get completionConfirmation value from database
+    try 
+    {
+        const response4 = await fetch('/completionConfirmation');
+        const data4 = await response4.json();
+        completionConfirmation = data4[0];
 
-        document.getElementById('completion').innerText = JSON.stringify(user1);
+        //document.getElementById('completion').innerText = JSON.stringify(completionConfirmation);
         //document.getElementById('userID').innerText = JSON.stringify(data);
-      } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error(error);
-      }
+    }
+
+    //Attempt to get completionConfirmation value from database
+    try 
+    {
+        const response5 = await fetch('/trackingCODES');
+        const data5 = await response4.json();
+        trackingCode = data5[0];
+
+        //document.getElementById('trackingCode').innerText = JSON.stringify(trackingCode);
+        //document.getElementById('userID').innerText = JSON.stringify(data);
+    } 
+    catch (error) 
+    {
+        console.error(error);
+    }
+
+    if(orderStatus=='IN PROGRESS' && shippingStatus=='ASSEMBLY')
+    {
+
+        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+        document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
+
+    }
+    else if(orderStatus=='IN PROGRESS' && shippingStatus=='SHIPPING')
+    {
+
+        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+        document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
+        document.getElementById('trackingCode').innerText = JSON.stringify(trackingCode);
+        
+    }
+    else if(orderStatus=='NO ORDER')
+    {
+
+        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+
+    }
+
+
     }
 
     // Execute both fetch requests independently
-    fetchOrderStatus();
-    fetchShippingStatus();
-    fetchUserID();
-    fetchConfirmation();
+    fetchStatus();
+
   </script>
 </body>
 </html>
