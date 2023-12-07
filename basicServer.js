@@ -23,11 +23,7 @@ import { updateCREDITCARD, updateCREDITCARD_CARDNUMBER, updateCREDITCARD_EXPIRAT
 
 //CONTRIBUTION OF Rumaysa Adnan
 
-// const express = require('express');
-
 import express from 'express'
-import fs from 'fs';
-
 
 const app = express();
 const port = 3002;
@@ -44,28 +40,6 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: '.' });
 });
 
-/*
-app.get('/monitor', (req, res) => {
-  // res.sendFile(__dirname+'/index.html');
-  res.sendFile('monitor.html', { root: '.' });
-  
-});
-*/
-
-/*
-const orders = [
-  { orderId: 1, status: "Pending", totalAmount: 100 },
-  { orderId: 2, status: "Shipped", totalAmount: 100 },
-  { orderId: 3, status: "Pending", totalAmount: 100 },
-];
-*/
-
-
-// const sampleproducts = [
-//   { productId: 1, name: "Lightsaber", description: "A jedi lightsaber", price: 100 },
-//   { productId: 2, name: "Blaster", description: "A blaster from star wars", price: 200 },
-//   { productId: 3, name: "Droid", description: "A droid from star wars", price: 300 },
-// ];
 
 app.get('/orderStatus', async(req, res) => {
 
@@ -92,7 +66,7 @@ app.get('/orderStatus', async(req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 
-  });
+});
 
 app.get('/completionConfirmation', async(req, res) => {
 
@@ -119,9 +93,9 @@ app.get('/completionConfirmation', async(req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 
-  });
+});
 
-  app.get('/shippingStatus', async(req, res) => {
+app.get('/shippingStatus', async(req, res) => {
 
     try {
       // Call the getUSERS function from your database module
@@ -146,7 +120,39 @@ app.get('/completionConfirmation', async(req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   
-    });
+});
+
+
+app.get('/shippingProvider', async(req, res) => {
+
+  try 
+  {
+    // Call the getUSERS function from your database module
+    const shipping = await getTRACKINGS();
+
+    const shippingProvider = [];
+
+    for (let i = 0; i < shipping.length; i++) 
+    {
+      const temp = shipping[i];
+      const status = temp.shippingProvider;
+      shippingProvider.push(status);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(shippingProvider))
+
+  } 
+  catch (error) 
+  {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+});
+
 
 app.get('/monitor_order', (req, res) => {
 
@@ -154,8 +160,6 @@ app.get('/monitor_order', (req, res) => {
 
 });
 
-
-// Add a new route for fetching trackingCODES
 app.get('/trackingCODES', async (req, res) => {
   try {
     // Call the getUSERS function from your database module
@@ -205,7 +209,6 @@ app.get('/userID', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 app.get('/product_list', async (req, res) => {
   // Dislay 20 list of products from database
