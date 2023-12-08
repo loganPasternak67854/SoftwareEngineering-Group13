@@ -14,7 +14,20 @@
 
         .navBar input[type="text"] {
           width: 600px;
-      }
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px;
+        }
+
+        /* Center the content using flexbox */
+        .status-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
 
     </style>
     
@@ -22,9 +35,11 @@
 
 <body>
     <div class="navBar">
+
         <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-      <input type="text" placeholder="Search for products in goods.com" />
         <button type="submit">Search<i class="fa-search"></i></button>
+        <input type="text" placeholder="Search for products in goods.com" />
+
         <div id="listing">
             <ul>
                 <a href="/account.html">Account</a>
@@ -36,153 +51,166 @@
           </div>
     </div>
 
-    <h1>User IDs</h1>
-    <div id="userID"></div>
-  
-    <h1>Order Status</h1>
-    <div id="orderStatus"></div>
+    <div id="loginContainer">
+        <input type="text" id="usernameInput" placeholder="Enter Username" />
+        <input type="password" id="passwordInput" placeholder="Enter Password" />
+        <button type="button" onclick="fetchUserID()">Fetch UserID</button>
+    </div>
 
-    <h1>Shipping Status</h1>
-    <div id="shippingStatus"></div>
 
-    <h1>Tracking Code</h1>
-    <div id="trackingCode"></div>
+    <div class="status-container" id="OrderStatusContainer">
+        <h1 id="OrderStatusHeader">Order Status</h1>
+        <div id="orderStatus"></div>
+    </div>
 
-    <h1>Shipping Provider</h1>
-    <div id="shippingProvider"></div>
+    <div class="status-container" id="ShippingStatusContainer">
+        <h1 id="ShippingStatusHeader">Shipping Status</h1>
+        <div id="shippingStatus"></div>
+    </div>
 
-    <h1>Completion Confirmation</h1>
-    <div id="completion"></div>
+    <div class="status-container" id="TrackingCodeContainer">
+        <h1 id="TrackingCodeHeader">Tracking Code</h1>
+        <div id="trackingCode"></div>
+    </div>
+
+    <div class="status-container" id="ShippingProviderContainer">
+        <h1 id="ShippingProviderHeader">Shipping Provider</h1>
+        <div id="shippingProvider"></div>
+    </div>
 
   <script>
-    async function fetchStatus() {
 
-    let orderStatus, shippingStatus, userID, completionConfirmation, trackingCode;
-    //let shippingProvider;
-
-    // Attempt to get the orderStatus from the database
-    try 
+    async function fetchUserID() 
     {
-        //Get the orderStatus from the database
-        const response1 = await fetch('/orderStatus');
-        const data1 = await response1.json();
-        orderStatus = data1[1];
+        try 
+        {
 
-        //document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+            // Fetch user list and password list
+            const response7 = await fetch('/usernames');
+            const userLIST = await response7.json();
 
-        //document.getElementById('orderStatus').innerText = JSON.stringify(data);
-    } 
-    catch (error) 
-    {
-        console.error(error);
+
+            console.log("USERNAMES");
+            console.log(userLIST);
+
+            const response8 = await fetch('/passwords');
+            const passwordLIST = await response8.json();
+
+            console.log("PASSWORDS");
+            console.log(passwordLIST);
+
+            const response9 = await fetch('/userID');
+            const userIDList = await response9.json();
+
+            // Get the username and password from input fields
+            const usernameInput = document.getElementById('usernameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            console.log("USERNAMES");
+            console.log(username);
+            console.log("PASSWORD");
+            console.log(password);
+
+            // Check if username and password match a specific user
+            const index = userLIST.indexOf(username);
+            if (index !== -1 && passwordLIST[index] === password) 
+            {
+                // Fetch the corresponding user's userID
+                const iD = userIDList[index];
+                // Display user's information based on userID
+                fetchStatus(iD);
+            } 
+            else 
+            {
+                console.log('Invalid username or password');
+            }
+        } 
+        catch (error) 
+        {
+            console.error(error);
+        }
+    }
+    async function fetchStatus(index) {
+
+        index=index-1;
+        try 
+        {
+            const response1 = await fetch('/orderStatus');
+            const data1 = await response1.json();
+            const orderStatus = data1[index];
+
+            const response2 = await fetch('/shippingStatus');
+            const data2 = await response2.json();
+            const shippingStatus = data2[index];
+
+            const response3 = await fetch('/userID');
+            const data3 = await response3.json();
+            const userID = data3[index];
+
+            const response4 = await fetch('/completionConfirmation');
+            const data4 = await response4.json();
+            const completionConfirmation = data4[index];
+
+            const response5 = await fetch('/trackingCODES');
+            const data5 = await response5.json();
+            const trackingCode = data5[index];
+
+            const response6 = await fetch('/shippingProvider');
+            const data6 = await response6.json();
+            const shippingProvider = data6[index];
+
+            // Display elements based on conditional statements
+            if (orderStatus === 'IN PROGRESS' && shippingStatus === 'ASSEMBLY') 
+            {
+
+                document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+                document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
+                document.getElementById('shippingProvider').innerText = "NaN";
+                document.getElementById('trackingCode').innerText = "NaN";
+
+            } 
+            else if (orderStatus === 'IN PROGRESS' && shippingStatus === 'SHIPPING') 
+            {
+
+                document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+                document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
+                document.getElementById('shippingProvider').innerText = JSON.stringify(shippingProvider);
+                document.getElementById('trackingCode').innerText = JSON.stringify(trackingCode);
+
+                //WITHIN THIS CODE NEED TO MAKE IT SO THAT THERE IS A BUTTON THAT CAN BE PRESSED TO CANCEL AN ORDER
+
+            } 
+            else if (orderStatus === 'NO ORDER') 
+            {
+
+                document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
+                document.getElementById('shippingStatus').innerText = "NaN";
+                document.getElementById('shippingProvider').innerText = "NaN";
+                document.getElementById('trackingCode').innerText = "NaN";
+                
+            }
+            else if (orderStatus == 'CANCELED')
+            {
+
+                document.getElementById('orderStatus').innerText = "NaN";
+                document.getElementById('shippingStatus').innerText = "NaN";
+                document.getElementById('shippingProvider').innerText = "NaN";
+                document.getElementById('trackingCode').innerText = "NaN";
+
+            }
+
+        } 
+        catch (error) 
+        {
+            console.error(error);
+        }
     }
 
-    // Attempt to get the shippingStatus from the database
-    try 
-    {
-        const response2 = await fetch('/shippingStatus');
-        const data2 = await response2.json();
-        shippingStatus = data2[1];
-
-        //document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
-        //document.getElementById('shippingStatus').innerText = JSON.stringify(data);
-    } 
-    catch (error) 
-    {
-        console.error(error);
-    }
-
-    // Attempt to get the userID
-    try 
-    {
-        const response3 = await fetch('/userID');
-        const data3 = await response3.json();
-        userID = data3[1];
-
-        //document.getElementById('userID').innerText = JSON.stringify(userID);
-        //document.getElementById('userID').innerText = JSON.stringify(data);
-    } 
-    catch (error)
-    {
-        console.error(error);
-    }
-
-    //Attempt to get completionConfirmation value from database
-    try 
-    {
-
-        const response4 = await fetch('/completionConfirmation');
-        const data4 = await response4.json();
-        completionConfirmation = data4[1];
-
-        //document.getElementById('completion').innerText = JSON.stringify(completionConfirmation);
-        //document.getElementById('userID').innerText = JSON.stringify(data);
-    } 
-    catch (error) 
-    {
-        console.error(error);
-    }
-
-    //Attempt to get completionConfirmation value from database
-    try 
-    {
-        const response5 = await fetch('/trackingCODES');
-        const data5 = await response5.json();
-        trackingCode = data5[1];
-
-        //document.getElementById('trackingCode').innerText = JSON.stringify(trackingCode);
-        //document.getElementById('userID').innerText = JSON.stringify(data);
-    } 
-    catch (error) 
-    {
-        console.error(error);
-    }
-
-    // Attempt to get the shippingProvider from the database
-    try 
-    {
-        //Get the orderStatus from the database
-        const response6 = await fetch('/shippingProvider');
-        const data6 = await response6.json();
-        shippingProvider = data6[1];
-
-        //document.getElementById('shippingProvider').innerText = JSON.stringify(shippingProvider);
-
-        //document.getElementById('shippingProvider').innerText = JSON.stringify(data6);
-    } 
-    catch (error) 
-    {
-        console.error(error);
-    }
-
-    if(orderStatus=='IN PROGRESS' && shippingStatus=='ASSEMBLY')
-    {
-
-        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
-        document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
-
-    }
-    else if(orderStatus=='IN PROGRESS' && shippingStatus=='SHIPPING')
-    {
-
-        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
-        document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
-        document.getElementById('shippingProvider').innerText = JSON.stringify(shippingProvider);
-        document.getElementById('trackingCode').innerText = JSON.stringify(trackingCode);
-        
-    }
-    else if(orderStatus=='NO ORDER')
-    {
-
-        document.getElementById('orderStatus').innerText = JSON.stringify(orderStatus);
-
-    }
-
-
-    }
 
     // Execute both fetch requests independently
-    fetchStatus();
+    fetchStatus(3);
 
   </script>
 </body>
