@@ -185,6 +185,56 @@ app.get('/trackingCODES', async (req, res) => {
   }
 });
 
+app.get('/usernames', async (req, res) => {
+  try {
+    // Call the getUSERS function from your database module
+    const users = await getUSERS();
+
+    const usernames = [];
+
+    for (let i = 0; i < users.length; i++) 
+    {
+      const user = users[i];
+      const username = user.loginUsername;
+      usernames.push(username);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(usernames))
+
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/passwords', async (req, res) => {
+  try {
+    // Call the getUSERS function from your database module
+    const users = await getUSERS();
+
+    const passwords = [];
+
+    for (let i = 0; i < users.length; i++) 
+    {
+      const user = users[i];
+      const password = user.loginPassword;
+      passwords.push(password);
+    }
+
+    // Send the response as JSON
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(passwords))
+
+  } catch (error) {
+    // Handle errors and send an error response
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/userID', async (req, res) => {
   try {
     // Call the getUSERS function from your database module
