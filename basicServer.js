@@ -262,10 +262,10 @@ app.get('/userID', async (req, res) => {
 
 app.get('/product_list', async (req, res) => {
   // Dislay 20 list of products from database
-  let productids= [1,2,3,4];
+  
   let products=[];
-  for (let i = 0; i < productids.length; i++) {
-    let product= await getPRODUCT(productids[i]);
+  for (let i = 1; i < 101; i++) {
+    let product= await getPRODUCT(i);
     products.push(product);
   }
   // console.log(products);
