@@ -23,6 +23,64 @@
             color: white;
             border: none;
         }
+
+        /* Add style for the separation line */
+        .separator {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .navBar {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #4CAF50; /* Add the background color here */
+        }
+
+        #logo {
+            margin-right: 10px;
+        }
+
+        #listing ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        #listing li {
+            margin-right: 10px;
+        }
+
+        #searchBar {
+            margin-right: auto; /* Push the search bar to the right */
+        }
+
+        .sidenav {
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .Productbar {
+            padding: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
     </style>
 
 </head>
@@ -30,19 +88,49 @@
 <body>
 
     <div class="navBar">
-        <!-- ... (your existing navigation bar) ... -->
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text" />
+        <input type="text" id="searchBar" placeholder="Search for products in goods.com" />
+        <button type="submit">Search<i class="fa-search"></i></button>
+        <div id="listing">
+            <ul>
+                <li><a href="/account.html">Account</a></li>
+                <li><a href="/cart.html">Cart</a></li>
+                <li><a href="/status.html">Your orders</a></li>
+                <li><a href="/index.html">Main</a></li>
+                <li><a href="/geoLocation.html">Tracking</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="LowerBody">
 
         <div class="sidenav">
-            <!-- ... (your existing sidebar) ... -->
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <div id="cart">
+                <h2>Shopping Cart</h2>
+                <ul id="cart-items">
+                    <!-- Cart items will be displayed here -->
+                </ul>
+                <p>Total: $0.00</p>
+                <button id="checkout">Checkout</button>
+            </div>
+
         </div>
 
+        <!-- Add a separation line -->
+        <div class="separator"></div>
+
         <div class="Productbar">
-            <ul id="product-list">
-                <!-- Product items will be displayed here dynamically using JavaScript -->
-            </ul>
+            <ul id="product-list"></ul>
 
             <div class="pagination">
                 <button id="prevPage" onclick="changePage(-1)">Previous</button>
@@ -56,7 +144,6 @@
                 let allProducts = []; // Store all products fetched from the API
 
                 function fetchProducts() {
-                    // Replace 'apiEndpoint' with your actual API endpoint
                     fetch('/product_list')
                         .then(response => response.json())
                         .then(products => {
