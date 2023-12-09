@@ -315,10 +315,18 @@ export async function createPRODUCT(productName,productDescription,discountCateg
 }
 
 //Posts a cart entity
-export async function createCART(userID,productID,numProducts,totalPrice)
-{
-    const [result] = await pool.query(`INSERT INTO CART (userID,productID,numProducts,totalPrice) VALUES (?,?,?,?)`,
-    [userID,productID,numProducts,totalPrice]) 
+export async function createCART(
+	userID,
+	productID,
+	productName,
+	numProducts,
+	totalPrice,
+	imageURL
+) {
+	const [result] = await pool.query(
+		`INSERT INTO CART (userID,productID,productName,numProducts,totalPrice,imageURL) VALUES (?,?,?,?,?,?)`,
+		[userID, productID, productName, numProducts, totalPrice, imageURL]
+	);
 }
 
 

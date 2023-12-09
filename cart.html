@@ -4,33 +4,57 @@
 <head>
     <title>Goods.com</title>
     <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        .navBar input[type="text"] {
+        #searchBar {
             width: 600px;
         }
+
+
+        #logo {
+            margin-right: 10px;
+        }
+
+        #listing ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        #listing li {
+            margin-right: 10px;
+        }
+
+        #searchBar {
+            margin-right: auto; /* Push the search bar to the right */
+        }
+
+
     </style>
 </head>
 
 <body>
     <div class="navBar">
-        <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-      <input type="text" placeholder="Search for products in goods.com" />
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text" />
+        <input type="text" id="searchBar" placeholder="Search for products in goods.com" />
         <button type="submit">Search<i class="fa-search"></i></button>
         <div id="listing">
             <ul>
-                <a href="/account.html">Account</a>
-                <a href="/cart.html">Cart</a>
-                <a href="/status.html">Your orders</a>  
-                <a href="/index.html"> Main </a>
-                <a href="/geoLocation.html"> Tracking </a>
-    </ul>
+                <li><a href="/account.html"><i class="fas fa-user"></i> Account</a></li>
+                <li><a href="/cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li><a href="/status.html">Your orders</a></li>
+                <li><a href="/index.html">Main</a></li>
+                <li><a href="/geoLocation.html">Tracking</a></li>
+            </ul>
+        </div>
     </div>
-      </div>
 
 
       <div class="Productbar">
         <!--         <h1>Available Products</h1> -->
-                <ul id ="product-list">
+                <ul id ="cart-list">
                     <!-- Product items will be displayed here dynamically using JavaScript-->
                 </ul>
                 
@@ -38,25 +62,35 @@
                     // Function to fetch orders from the API
                     function fetchCart() {
                               // Replace 'apiEndpoint' with your actual API endpoint
-                              fetch('/fetch_cart')
+                              fetch('/getcart')
                                   .then(response => response.json())
-                                  .then(products => {
-                                      const ProductList = document.getElementById('product-list');
+                                  .then(carts => {
+                                      const CartList = document.getElementById('cart-list');
                                       var totalAmount= 0;
-                                      products.forEach(product => {
+                                      carts.forEach(cart => {
                                           const listItem = document.createElement('li');
-                                          totalAmount = totalAmount + parseFloat(product.productPrice);
+                                          const priceString = cart.totalPrice;
+                                          // Remove the "$" sign
+                                        const priceWithoutDollar = priceString.replace('$', '');
+                                            // Parse the string to a floating-point number (e.g., 799.99)
+                                            const priceAsFloat = parseFloat(priceWithoutDollar);
+                                            // Convert the floating-point number to an integer if needed
+                                            const priceAsInteger = parseFloat(priceAsFloat.toFixed(4)); // or use Math.floor() or Math.ceil() based on your rounding preference
+                                            // Now you can add it to the totalAmount
+                                            totalAmount += priceAsInteger;
+                                          //totalAmount = totalAmount + cart.totalPrice;
                                           listItem.innerHTML = `
                                               <div class="product-box">
-                                              <h2>Product name: ${product.name}</h2>
-                                              <p>Description: ${product.productDescription}</p>
+                                              <h2>Product name: ${cart.productName}</h2>
+                                              <img src="${cart.imageURL}" alt="Product Image" width="150" height="100">
+                                              <p>Product Quantity: ${cart.numProducts}</p>
                                               <div class="product-price">
-                                              <p>Price: $${product.productPrice}</p>
+                                              <p>Price: $${cart.totalPrice}</p>
                                               </div>
                                               </div>
                                               <!-- Add more order details here -->
                                           `;
-                                          ProductList.appendChild(listItem);
+                                          CartList.appendChild(listItem);
                                       });
                                       const totalItem = document.createElement('p');
                                       totalItem.innerHTML= `
@@ -65,7 +99,7 @@
                                       <button id="checkout">Checkout</button>
                                       </div>
                                       `;
-                                      ProductList.appendChild(totalItem);
+                                      CartList.appendChild(totalItem);
                                   })
                                   .catch(error => console.error('Error fetching orders:', error));
                           }

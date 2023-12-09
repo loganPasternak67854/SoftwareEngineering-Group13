@@ -1,7 +1,3 @@
-// const express = require('express');
-
-//CONTRIBUTION OF LOGAN PASTERNAK START
-
 import { createUSER, createPRODUCT, createCART, createTRACKING, createCOMPLETION } from "./database.js";
 import { getUSERS, getUSER, getUSERNAME, getUSER_LOGIN_USERNAME,getUSER_LOGIN_PASSWORD, getEMAIL, getPHONE, getADDRESS, getCODE } from "./database.js";
 import { getPRODUCTS, getPRODUCT, getPRODUCT_NAME, getPRODUCT_DESCRIPTION, getPRODUCT_DISCOUNT, getPRODUCT_DISCOUNT_AMOUNT, getPRODUCT_PRICE } from "./database.js";
@@ -19,14 +15,12 @@ import { createCREDITCARD } from "./database.js";
 import { deleteCREDITCARD } from "./database.js";
 import { updateCREDITCARD, updateCREDITCARD_CARDNUMBER, updateCREDITCARD_EXPIRATION, updateCREDITCARD_CVV } from "./database.js";
 
-//CONTRIBUTION OF LOGAN PASTERNAK ENDS
-
-//CONTRIBUTION OF Rumaysa Adnan
-
 import express from 'express'
 
 const app = express();
 const port = 3002;
+
+app.use(express.json());
 app.use(express.static("."));
 // Start the server
 app.listen(port, () => {
@@ -38,6 +32,51 @@ app.listen(port, () => {
 //CONTRIBUTION OF Santosh Pandey START
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: '.' });
+});
+
+app.get('/products', async (req, res) => {
+	try {
+		const products = await getPRODUCTS();
+		res.json(products);
+	} catch (error) {
+		res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
+
+app.get('/getcart', async (req, res) => {
+	try {
+		const carts = await getCARTS();
+		res.json(carts);
+	} catch (error) {
+		res.status(500).json({ error: 'Internal Server Error' });
+	}
+});
+
+app.post('/addtocart', async (req, res) => {
+	try {
+		console.log(req.body);
+		const {
+			userID,
+			productID,
+			productName,
+			numProducts,
+			totalPrice,
+			imageURL,
+		} = req.body;
+		await createCART(
+			userID,
+			productID,
+			productName,
+			numProducts,
+			totalPrice,
+			imageURL
+		);
+
+		res.status(201).json({ message: 'Cart created successfully' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Internal Server Error' });
+	}
 });
 
 
@@ -300,4 +339,3 @@ app.get('/account', (req, res) => {
         // res.end(JSON.stringify(products));
 });
 
-//CONTRIBUTION OF Santosh Pandey END
