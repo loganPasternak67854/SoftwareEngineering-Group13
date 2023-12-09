@@ -118,6 +118,27 @@ VALUES
     ('Smartphone', 'High-end mobile device', 'DISABLED', 60, 499.99),
     ('Headphones', 'Wireless noise-canceling headphones', 'DISABLED', 30, 149.99);
 
+
+CREATE PROCEDURE Insert100Products()
+BEGIN
+    DECLARE counter INT DEFAULT 1;
+
+    WHILE counter <= 100 DO
+        INSERT INTO PRODUCTS (productName, productDescription, discountCategory, discountAmount, productPrice)
+        VALUES (
+            CONCAT('Product ', counter),
+            CONCAT('Description ', counter),
+            IF(counter % 2 = 0, 'ENABLED', 'DISABLED'),
+            FLOOR(RAND() * 50),
+            ROUND(RAND() * 10 + 5, 2)
+        );
+
+        SET counter = counter + 1;
+    END WHILE;
+END;
+
+CALL Insert100Products();
+
 --Puts data into Cart table
 INSERT INTO CART(userID,productID,numProducts, totalPrice)
 VALUES
