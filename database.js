@@ -856,7 +856,7 @@ export async function updateCOMPLETE_QUERY(id,opinionQuery)
 export async function searchPRODUCT(query)
 {
     console.log(query);
-    const [rows] = await pool.query(`SELECT * FROM products WHERE productName LIKE ? LIMIT 10`, [`%${query}%`]);
+    const [rows] = await pool.query(`SELECT * FROM products WHERE productName LIKE ? ORDER By (Soundex(productName)- Soundex(?)) DESC LIMIT 10`, [`%${query}%`,`${query}`]);
     return rows;
 }
 
