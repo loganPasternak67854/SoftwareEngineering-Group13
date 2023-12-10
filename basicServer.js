@@ -1,6 +1,6 @@
 import { createUSER, createPRODUCT, createCART, createTRACKING, createCOMPLETION } from "./database.js";
 import { getUSERS, getUSER, getUSERNAME, getUSER_LOGIN_USERNAME,getUSER_LOGIN_PASSWORD, getEMAIL, getPHONE, getADDRESS, getCODE } from "./database.js";
-import { getPRODUCTS, getPRODUCT, getPRODUCT_NAME, getPRODUCT_DESCRIPTION, getPRODUCT_DISCOUNT, getPRODUCT_DISCOUNT_AMOUNT, getPRODUCT_PRICE } from "./database.js";
+import { getPRODUCTS, searchPRODUCT, getPRODUCT, getPRODUCT_NAME, getPRODUCT_DESCRIPTION, getPRODUCT_DISCOUNT, getPRODUCT_DISCOUNT_AMOUNT, getPRODUCT_PRICE } from "./database.js";
 import { getCARTS, getCART, getCART_NUMPRODUCTS, getCART_TOTAL_PRICE } from "./database.js";
 import { getTRACKINGS, getTRACKING, getTRACKING_ORDERSTATUS, getTRACKING_SHIPPINGSTATUS, getTRACKING_SHIPPINGPROVIDER } from "./database.js";
 import { getCOMPLETES, getCOMPLETE, getCOMPLETE_COMPLETIONMESSAGE, getCOMPLETE_COMPLETIONCONFIRMATION, getCOMPLETE_OPINIONQUERY } from "./database.js";
@@ -336,6 +336,15 @@ app.get('/fetch_cart', async (req, res) => {
   // console.log(products);
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(items));
+});
+
+app.post('/product_search', async (req, res) => {
+  // Dislay 20 list of products from database
+  console.log("query: ",req.body.search);
+  let products= await searchPRODUCT(req.body.search);
+  console.log('products',products);
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(products));
 });
 
 
