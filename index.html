@@ -11,8 +11,8 @@
 
   <div class="navBar">
     <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-  <input type="text" placeholder="Search for products in goods.com" />
-    <button type="submit">Search<i class="fa-search"></i></button>
+    <input type="text" id ="search-input" placeholder="Search for products in goods.com" />
+    <button type="submit" onclick = "searchProducts()">Search<i class="fa-search"></i></button>
     <div id="listing">
         <ul>
             <a href="/account.html">Account</a>
@@ -48,13 +48,6 @@
       </div>
   </div>
 
-
-
-
-
-
-
-
          <div class="Productbar">
 <!--         <h1>Available Products</h1> -->
         <ul id ="product-list">
@@ -72,14 +65,13 @@
                                   const listItem = document.createElement('li');
                                   listItem.innerHTML = `
                                       <div class="product-box">
-                                      <h2>Product name: ${product.name}</h2>
-                                      <p>Description: ${product.description}</p>
-                                      <div class="product-price">
-                                      <p>Price: $${product.price.toFixed(2)}</p>
+                                        <h2>Product name: ${product.productName}</h2>
+                                        <p>Description: ${product.productDescription}</p>
+                                        <div class="product-price">
+                                        <p>Price: $${product.productPrice}</p>
                                       </div>
                                       <button id="add-to-cart">Add to Cart</button>
                                       </div>
-                                      <!-- Add more order details here -->
                                   `;
                                   ProductList.appendChild(listItem);
                               });
@@ -88,14 +80,10 @@
                   }
                   // Fetch and render order list on page load
                   fetchProducts();
-        
         </script>
 </div>
-
-
-    <script>
-        // JavaScript functionality (e.g., adding to cart, order tracking) will be implemented here
-    </script>
+        <script src="./common.js"></script>
+    
 </body>
 
 </html>

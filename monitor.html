@@ -3,33 +3,38 @@
 
 <head>
     <title>Goods.com</title>
-    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
 </head>
 
 <body>
     <div class="navBar">
-        <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-      <input type="text" placeholder="Search for products in goods.com" />
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text" />
+        <input type="text" placeholder="Search for products in goods.com" />
         <button type="submit">Search<i class="fa-search"></i></button>
         <div id="listing">
             <ul>
                 <a href="/account.html">Account</a>
                 <a href="/cart.html">Cart</a>
-                <a href="/monitor.html">Your orders</a>        
-              </ul>
-          </div>
+                <a href="/monitor.html">Your orders</a>
+            </ul>
+        </div>
     </div>
-  
+    <div class="Productbar">
+        <!--         <h1>Available Products</h1> -->
+                <ul id ="product-list">
+                    <!-- Product items will be displayed here dynamically using JavaScript-->
+                </ul>
+    </div>
     <h1>Your orders</h1>
     <div class="OrderContainer">
         <ul id="order-list">
             <!-- Orders will be dynamically generated here using JavaScript -->
         </ul>
     </div>
-  
-  <script> 
-  // Function to fetch orders from the API
-  function fetchOrders() {
+
+    <script>
+        // Function to fetch orders from the API
+        function fetchOrders() {
             // Replace 'apiEndpoint' with your actual API endpoint
             fetch('/monitor_order')
                 .then(response => response.json())
@@ -41,7 +46,7 @@
                             <div class="order-box">
                             <h2>Order ID: ${order.orderId}</h2>
                             <p>Status: ${order.status}</p>
-                            <p>Total Amount: $${order.totalAmount.toFixed(2)}</p>
+                            <p>Total Amount: $${order.totalAmount(2)}</p>
                             </div>
                             <!-- Add more order details here -->
                         `;
@@ -53,6 +58,9 @@
         }
         // Fetch and render order list on page load
         fetchOrders();
-  
-  </script>
-  </body>
+
+    </script>
+    <script src="./common.js"></script>
+</body>
+
+</html>

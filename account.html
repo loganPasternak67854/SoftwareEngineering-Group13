@@ -10,8 +10,8 @@
 <body>
     <div class="navBar">
         <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
-        <input type="text" placeholder="Search for products in goods.com" />
-        <button type="submit">Search<i class="fa-search"></i></button>
+        <input type="text" id ="search-input" placeholder="Search for products in goods.com" />
+    <button type="submit" onclick = "searchProducts()">Search<i class="fa-search"></i></button>
         <div id="listing">
             <ul>
                 <a href="/account.html">Account</a>
@@ -21,7 +21,12 @@
         </div>
     </div>
 
-
+    <div class="Productbar">
+      <!--         <h1>Available Products</h1> -->
+              <ul id ="product-list">
+                  <!-- Product items will be displayed here dynamically using JavaScript-->
+              </ul>
+  </div>
     <div class="login">  
 
       <div id="login-error-msg-holder">
@@ -43,10 +48,11 @@
   </div>
   <script src="./login-handle.js"></script>
 
-    <script>
+    <!-- <script>
         document.getElementById('signup-button').addEventListener('click', function() {
             createAccount(); 
         });
-    </script>
+    </script> -->
+    <script src="./common.js"></script>
 
 </body>
