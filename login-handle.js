@@ -1,5 +1,7 @@
 /*Motivation from: https://medium.com/swlh/how-to-create-your-first-login-page-with-html-css-and-javascript-602dd71144f1*/
 
+// const speakeasy = require('speakeasy');
+
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
@@ -11,9 +13,10 @@ loginButton.addEventListener("click", (e) => {
   console.log("login button clicked");
   const username = loginForm.username.value;
   const password = loginForm.password.value;
+  const otp      = loginForm.otp.value;
   loginErrorMsg.style.opacity = 0;
-  if (username === "user" && password === "pass") {
-      // alert("You have successfully logged in.");
+  if (username === "user" && password === "pass" && otp === "357455") {
+      alert("You have successfully logged in.");
       loginSuccessMsg.style.opacity = 1;
       setTimeout(3000);
       location.replace('/monitor.html');
@@ -22,8 +25,9 @@ loginButton.addEventListener("click", (e) => {
   }
 });
 
-loginButton.addEventListener("click", (e) => {
+signUpButton.addEventListener("click", (e) => {
   e.preventDefault();
+  // console.log("signup button clicked");
   if (checkExistingUser(username, email)) {
       return "User already exists. Please choose a different username or email.";
   }
@@ -33,7 +37,7 @@ loginButton.addEventListener("click", (e) => {
       password: password,
   };
   userAccounts.push(newUser);
-  // alert("Account successfully created.");
+  alert("Account successfully created.");
 });
 
 function checkExistingUser(username, email) {
@@ -46,4 +50,4 @@ for (let user of userAccounts) {
 return false; 
 }
 
-const userAccounts = []; // Array to hold user accounts (temporary)
+const userAccounts = []; // Array to hold user accounts
