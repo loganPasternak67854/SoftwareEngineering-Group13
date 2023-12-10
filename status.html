@@ -29,6 +29,10 @@
             margin: 20px;
         }
 
+        #satisfactionFormContainer {
+            margin-top: 20px;
+        }
+
     </style>
     
 </head>
@@ -66,6 +70,7 @@
     <div class="status-container" id="ShippingStatusContainer">
         <h1 id="ShippingStatusHeader">Shipping Status</h1>
         <div id="shippingStatus"></div>
+        <div id="satisfactionFormContainer"></div>
     </div>
 
     <div class="status-container" id="TrackingCodeContainer">
@@ -206,15 +211,10 @@
                 document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
                 document.getElementById('shippingProvider').innerText = "NaN";
                 document.getElementById('trackingCode').innerText = "NaN";
+                
+                index=index+1;
+                displaySatisfactionForm(index);
 
-                // Create a link or button to navigate to the satisfaction input webpage
-                const satisfactionLink = document.createElement('a');
-                satisfactionLink.href = '/satisfaction.html'; // Replace with the actual URL of your satisfaction input webpage
-                satisfactionLink.innerText = 'Provide Satisfaction Feedback';
-                satisfactionLink.style.cursor = 'pointer'; // Optional: add a pointer cursor for better UX
-
-                // Append the link to the status container
-                document.getElementById('ShippingStatusContainer').appendChild(satisfactionLink);
             }
 
         } 
@@ -222,6 +222,72 @@
         {
             console.error(error);
         }
+    }
+
+    function displaySatisfactionForm(index) 
+    {
+        // Create the satisfaction form dynamically
+        const satisfactionForm = document.createElement('form');
+        satisfactionForm.id = 'userSatisfactionForm';
+
+        const satisfactionLabel = document.createElement('label');
+        satisfactionLabel.textContent = 'Rate your satisfaction on a scale from 1 to 10:';
+        satisfactionForm.appendChild(satisfactionLabel);
+
+        const satisfactionInput = document.createElement('input');
+        satisfactionInput.type = 'number';
+        satisfactionInput.id = 'satisfaction';
+        satisfactionInput.name = 'satisfaction';
+        satisfactionInput.min = '1';
+        satisfactionInput.max = '10';
+        satisfactionInput.required = true;
+        satisfactionForm.appendChild(satisfactionInput);
+
+        const submitButton = document.createElement('input');
+        submitButton.type = 'submit';
+        submitButton.value = 'Submit Feedback';
+        satisfactionForm.appendChild(submitButton);
+
+        // Append the form to the satisfaction form container
+        document.getElementById('satisfactionFormContainer').appendChild(satisfactionForm);
+
+        // Add event listener for form submission
+        satisfactionForm.addEventListener('submit', function (event) {
+        handleSatisfactionFormSubmit(event, index);
+    });
+    }
+
+    function handleSatisfactionFormSubmit(event,index) 
+    {
+        event.preventDefault();
+
+        // Retrieve the satisfaction rating from the form
+        const satisfactionRating = document.getElementById('satisfaction').value;
+
+        // Perform further actions with the satisfaction rating, e.g., send to the server
+        updateSatisfactionRating(satisfactionRating,index);
+    }
+
+    async function updateSatisfactionRating(satisfactionRating,index) 
+    {
+        fetch('/updateSatisfactionRating', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: index, opinionQuery: satisfactionRating }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        if (data.success) {
+            console.log('Satisfaction rating updated successfully');
+        } else {
+            console.error('Error updating satisfaction rating:', data.error);
+        }
+        })
+        .catch((error) => {
+        console.error('Error updating satisfaction rating:', error);
+        });
     }
 
   </script>

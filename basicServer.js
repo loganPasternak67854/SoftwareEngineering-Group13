@@ -52,6 +52,20 @@ app.get('/getcart', async (req, res) => {
 	}
 });
 
+app.post('/updateSatisfactionRating', async (req, res) => {
+  
+  const { id, opinionQuery } = req.body;
+
+  try {
+    const success = await updateCOMPLETE_QUERY(id, opinionQuery);
+    res.json({ success });
+  } catch (error) {
+    console.error('Error updating satisfaction rating:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+
+});
+
 app.post('/addtocart', async (req, res) => {
 	try {
 		console.log(req.body);

@@ -888,6 +888,8 @@ console.log(result);
 
 //const temp = await createCART(26,10,1,19.99);
 
+await updateCOMPLETE_QUERY(5,'5');
+
 
 /*
 const temp = updateUSER(17,'Rubert','dandy','chest','whowho','coco','7452224185','X89221');
