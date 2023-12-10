@@ -200,6 +200,22 @@
                 document.getElementById('trackingCode').innerText = "NaN";
 
             }
+            else if (orderStatus == 'IN PROGRESS' && shippingStatus == 'COMPLETE')
+            {
+                document.getElementById('orderStatus').innerText = "NaN";
+                document.getElementById('shippingStatus').innerText = JSON.stringify(shippingStatus);
+                document.getElementById('shippingProvider').innerText = "NaN";
+                document.getElementById('trackingCode').innerText = "NaN";
+
+                // Create a link or button to navigate to the satisfaction input webpage
+                const satisfactionLink = document.createElement('a');
+                satisfactionLink.href = '/satisfaction.html'; // Replace with the actual URL of your satisfaction input webpage
+                satisfactionLink.innerText = 'Provide Satisfaction Feedback';
+                satisfactionLink.style.cursor = 'pointer'; // Optional: add a pointer cursor for better UX
+
+                // Append the link to the status container
+                document.getElementById('ShippingStatusContainer').appendChild(satisfactionLink);
+            }
 
         } 
         catch (error) 
@@ -207,10 +223,6 @@
             console.error(error);
         }
     }
-
-
-    // Execute both fetch requests independently
-    fetchStatus(3);
 
   </script>
 </body>

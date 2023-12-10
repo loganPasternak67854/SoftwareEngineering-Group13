@@ -128,7 +128,8 @@ VALUES
     ('Alice','temp','temp', '123 Elm St', 'alice@example.com', '555-123-4567', 'A1B2C3'),
     ('Bob','buffy','tuffy', '789 Oak Dr', 'bob@gmail.com', '777-888-9999', 'B4O5B6'),
     ('Michael','tubularBells','password', '789 Pine Rd', 'michael@example.com', '555-555-5555', 'M9P8QZ'),
-    ('Emily','CocoPuffs','josh918', '101 Redwood Ave', 'emily@gmail.com', '111-222-3333', 'E7R2W1');
+    ('Emily','CocoPuffs','josh918', '101 Redwood Ave', 'emily@gmail.com', '111-222-3333', 'E7R2W1'),
+    ('Rupert','Demitry','chicken4959', 'Deter Lane', 'wheelFortune', '345-543-4444', 'QZ378B');
 
 --Puts data into Products table
 INSERT INTO PRODUCTS(productName,productDescription,discountCategory, discountAmount, productPrice,imageURL)
@@ -172,21 +173,24 @@ VALUES
     (1, '1234567890123456', '12/25', '123'),
     (2, '9876543210987654', '05/23', '456'),
     (3, '1111222233334444', '08/24', '789'),
-    (4, '5555666677778888', '02/22', '555');
+    (4, '5555666677778888', '02/22', '555'),
+    (5, '5555226675578888', '03/32', '441');
 
 INSERT INTO TRACKING(userID,orderStatus,shippingStatus,shippingProvider)
 VALUES
     (1,'IN PROGRESS','ASSEMBLY','HoalinOats'),
     (2,'IN PROGRESS', 'SHIPPING', 'UPS'),
     (3,'CANCELED','COMPLETE','temp'),
-    (4,'NO ORDER', 'COMPLETE', 'temp');
+    (4,'NO ORDER', 'COMPLETE', 'temp'),
+    (5,'IN PROGRESS', 'COMPLETE', 'UPS');
 
 INSERT INTO COMPLETE(trackerID, completionMessage, completionConfirmation, opinionQuery)
 VALUES
     (1,'PACKAGE ON ITS WAY','INCOMPLETE','6'),
     (2,'PACKAGE ON ITS WAY', 'INCOMPLETE', '2'),
     (3,'NaN','INCOMPLETE','1'),
-    (4,'NaN','INCOMPLETE','4');
+    (4,'NaN','INCOMPLETE','4'),
+    (5,'Package Delivered', 'COMPLETE', '7');
 
 SELECT * FROM USERS
 
