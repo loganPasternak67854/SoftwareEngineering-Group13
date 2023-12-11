@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Goods.com</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="navBar">
+        <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
+        <input type="text" placeholder="Search for products in goods.com" />
+        <button type="submit">Search<i class="fa-search"></i></button>
+        <div id="listing">
+            <ul>
+                <a href="/account.html"><i class="fas fa-user"></i> Account</a>
+                <a href="/monitor.html">Orders</a>
+                <a href="/cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                <a href="/index.html"><i class="fas fa-home"></i> Home</a>
+            </ul>
+    </div>
+      </div>
+
+
+      <div class="Productbar">
+        <!--         <h1>Available Products</h1> -->
+                <ul id ="cart-list">
+                    <!-- Product items will be displayed here dynamically using JavaScript-->
+                </ul>
+                
+                <script> 
+                    function increaseQuantity(userID, productID, numProducts, totalPrice) {
+                            if (numProducts >= 10) {
+                                alert("You can only add up to 10 of the same product.");
+                            } else {
+                                fetch('/increasequantity', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        userID: userID,
+                                        productID: productID,
+                                        numProducts: numProducts,
+                                        totalPrice: totalPrice
+                                    }),
+                                })
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        //alert(`Increased quantity of ${productID} in the cart successfully`);
+                                        location.reload();
+                                    } else {
+                                        alert(response.error);
+                                    }
+                                })
+                                .catch(error => console.error('Error increasing quantity:', error));
+                            }
+                        }
+
+                    function decreaseQuantity(userID, productID, numProducts, totalPrice) {
+                    // Check if numProducts is greater than or equal to 1
+                    if (numProducts > 1) {
+                        fetch('/decreasequantity', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                userID: userID,
+                                productID: productID,
+                                numProducts: numProducts,
+                                totalPrice: totalPrice
+                            }),
+                        })
+                        .then(response => {
+                            if (response.status === 200) {
+                                //alert(`Decreased quantity of ${productID} in the cart successfully`);
+                                location.reload();
+                            } else {
+                                alert(response.error);
+                            }
+                        })
+                        .catch(error => console.error('Error decreasing to quantity:', error));
+                    } else {
+                        // Display an alert if numProducts is less than 1
+                        alert("Quantity cannot be less than 1.");
+                    }
+                }
+
+                    function deleteItem(userID,productID) {
+                        fetch('/deleteFromCart', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json', 
+                            },
+                            body: JSON.stringify({
+                                userID:userID,
+                                productID:productID,
+                            }),
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    //alert(`Product with ${productID} deleted from  the cart successfully`);
+                                    location.reload();
+                                } else {
+                                    alert(response.error);
+                                }
+                            })
+                            .catch(error => console.error('Error increasing quantity:', error));
+                        }
+                    
+                    function emptyCart(userID) {
+                        fetch('/deleteallproducts', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json', 
+                            },
+                            body: JSON.stringify({
+                                userID:userID,
+                            }),
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    alert(`Cart emptied successfully`);
+                                    location.reload();
+                                } else {
+                                    alert(response.error);
+                                }
+                            })
+                            .catch(error => console.error('Error increasing quantity:', error));
+                        }
+
+                    function fetchCart() {
+                              // Replace 'apiEndpoint' with your actual API endpoint
+                              fetch('/getcart')
+                                  .then(response => response.json())
+                                  .then(carts => {
+                                        const CartList = document.getElementById('cart-list');
+                                        var totalAmount= 0;
+                                        carts.forEach(cart => {
+                                        const listItem = document.createElement('li');
+                                        const priceString = cart.totalPrice;
+                                        // Remove the "$" sign
+                                        const priceWithoutDollar = priceString.replace('$', '');
+                                        // Parse the string to a floating-point number (e.g., 799.99)
+                                        const priceAsFloat = parseFloat(priceWithoutDollar);
+                                        // Convert the floating-point number to an integer if needed
+                                        const priceAsInteger = parseFloat(priceAsFloat.toFixed(4)); // or use Math.floor() or Math.ceil() based on your rounding preference
+                                        // Now you can add it to the totalAmount
+                                        totalAmount += priceAsInteger;
+                                        //totalAmount = totalAmount + cart.totalPrice;
+                                        listItem.innerHTML = `
+                                            <div class="product-box">
+                                                <h2>Product name: ${cart.productName}</h2>
+                                                <img src="${cart.imageURL}" alt="Product Image" width="150" height="100">
+                                                <p>Product Quantity: 
+                                                    <button id="updateQuantitym" style="color: white; border: 1px solid red; background-color: red;">-</button>
+                                                    ${cart.numProducts}
+                                                    <button id="updateQuantityp" style="color: white; border: 1px solid green; background-color: green;">+</button>
+                                                </p>
+                                                <div class="product-price">
+                                                <p>Price: $${cart.totalPrice}</p>
+                                                </div>
+                                                <button id="deleteItem" style="color: white; border: 1px solid black; background-color: black;">Delete</button>
+                                            </div>
+                                          `;
+                                          const deleteItemButton = listItem.querySelector('#deleteItem');
+                                            deleteItemButton.addEventListener('click', () => {
+                                                deleteItem(cart.userID, cart.productID);
+                                            });
+                                            const updateQuantityButtonm = listItem.querySelector('#updateQuantitym');
+                                            updateQuantityButtonm.addEventListener('click', () => {
+                                                decreaseQuantity(cart.userID,cart.productID,cart.numProducts,cart.totalPrice);
+                                            });
+                                            const updateQuantityButtonp = listItem.querySelector('#updateQuantityp');
+                                            updateQuantityButtonp.addEventListener('click', () => {
+                                                increaseQuantity(cart.userID,cart.productID,cart.numProducts,cart.totalPrice);
+                                            }); 
+                                        CartList.appendChild(listItem);
+                                      });
+                                      const totalItem = document.createElement('p');
+                                      totalItem.innerHTML= `
+                                      <div class="checkout-box">
+                                      <h3> Total price: $${totalAmount}</h3>
+                                      <button id="checkout">Checkout</button>
+                                      </div>
+                                      `;
+                                      CartList.appendChild(totalItem);
+                                      const emptyCartButton = document.createElement('button');
+                                        emptyCartButton.id = 'emptyCart';
+                                        emptyCartButton.style.color = 'white';
+                                        emptyCartButton.style.backgroundColor = 'red';
+                                        emptyCartButton.style.marginTop = "-20px"
+                                        emptyCartButton.style.marginLeft = '650px'
+                                        emptyCartButton.textContent = 'Empty Cart';
+
+                                        emptyCartButton.addEventListener('click', () => {
+                                            emptyCart(carts[0].userID);
+                                        });
+                                        CartList.appendChild(emptyCartButton);
+
+                                  })
+                                  .catch(error => console.error('Error fetching orders:', error));
+                          }
+
+                          // Fetch and render order list on page load
+                          fetchCart();
+                
+                </script>
+        </div>
+
+
+
+    </body>

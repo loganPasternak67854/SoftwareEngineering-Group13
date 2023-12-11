@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Goods.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+  
+
+  <div class="navBar">
+    <img id="logo" src="assets/goods_logo.png" alt="alternative text"/>
+  <input type="text" id="searchInput" placeholder="Search for products in goods.com" />
+    <button type="button" id="searchButton">Search<i class="fa-search"></i></button>
+    <div id="listing">
+        <ul>
+            <a href="/account.html"><i class="fas fa-user"></i> Account</a>
+            <a href="/cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="/monitor.html">Orders</a> 
+        </ul>
+    </div>
+  </div>
+
+  <div class="LowerBody">      
+    
+    
+    <div class="sidenav">  
+        <form id="login-form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required><br>
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br>
+
+          <button type="submit">Login</button>
+      </form>
+  
+    
+    
+    <div id="cart">
+          <h2>Shopping Cart</h2>
+          <ul id="cart-items">
+              <!-- Cart items will be displayed here -->
+          </ul>
+          <p>Total: $0.00</p>
+          <button id="checkout">Checkout</button>
+      </div>
+  </div>
+
+  <div class="Productbar">
+    <!--         <h1>Available Products</h1> -->
+        <div id="filters" style="margin-left: 75px;">
+            <label for="categoryFilter">Filter by Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="discountCategory">Discounted Products</option>
+                <!-- Add more categories as needed -->
+            </select>
+            <button id="applyFilter">Apply Filter</button>
+        </div>
+        
+            <ul id ="product-list">
+                <!-- Product items will be displayed here dynamically using JavaScript-->
+            </ul>
+    
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                        // Fetch and render product list on page load
+                        fetchProducts();
+    
+                        // Get references to the search input and search button
+                        const searchInput = document.getElementById('searchInput');
+                        const searchButton = document.getElementById('searchButton');
+                        const applyFilterButton = document.getElementById('applyFilter');
+                        const categoryFilter = document.getElementById('categoryFilter');
+                        // console.log(searchInput);
+                        // Add an event listener to the search button
+                        searchButton.addEventListener('click', function () {
+                            const searchTerm = searchInput.value.trim().toLowerCase();
+    
+                            // If the search term is not empty, filter the products
+                            if (searchTerm !== '') {
+                                filterProducts(searchTerm);
+                            } else {
+                                // If the search term is empty, fetch all products
+                                fetchProducts();
+                            }
+                        });
+
+                        applyFilterButton.addEventListener('click', function () {
+                            const selectedCategory = categoryFilter.value;
+
+                            // Check if the selected category is 'discountCategory'
+                            if (selectedCategory === 'discountCategory') {
+                                filterDiscountedProducts();
+                            } else {
+                                // Handle other categories or fetch all products
+                                fetchProducts();
+                                location.reload();
+                            }
+                        });
+                    });
+    
+                    // SEARCH PRODUCTS
+                    // Function to filter products based on the search term
+                    function filterProducts(searchTerm) {
+                        // Replace 'apiEndpoint' with your actual API endpoint
+                        fetch('/products')
+                            .then(response => response.json())
+                            .then(products => {
+                                const ProductList = document.getElementById('product-list');
+                                ProductList.innerHTML = ''; // Clear the existing product list
+    
+                                products.forEach(product => {
+                                    // Check if the product name or description contains the search term
+                                    if (
+                                        product.productName.toLowerCase().includes(searchTerm) ||
+                                        product.productDescription.toLowerCase().includes(searchTerm)
+                                    ) {
+                                        alert("Product found in product catalog!");
+                                        const listItem = document.createElement('li');
+                                        listItem.innerHTML = `
+                                            <div class="product-box">
+                                                <h2>Product name: ${product.productName}</h2>
+                                                <img src="${product.imageURL}" alt="Product Image" width="150" height="100">
+                                                <p>Description: ${product.productDescription}</p>
+                                                <div class="product-price">
+                                                    <p>Original Price: $${product.productPrice}</p>
+                                                    <p>Discounted Price: $${product.discountPrice}</p>
+                                                    <p>Discount: ${product.discountAmount}%</p>
+                                                </div>
+                                                <button class="add-to-cart">Add to Cart</button>
+                                            </div>
+                                        `;
+                                        // Add an event listener to the "Add to Cart" button
+                                        const addToCartButton = listItem.querySelector('.add-to-cart');
+                                        addToCartButton.addEventListener('click', () => {
+                                            console.log(product.discountCategory);
+                                            addToCart(product.productID, product.productName, product.discountAmount,product.discountPrice, product.productPrice, product.imageURL);  
+                                        });
+    
+                                        ProductList.appendChild(listItem);
+                                    }
+                                });
+                            })
+                            .catch(error => console.error('Error fetching products:', error));
+                            
+                    }
+                // Function to fetch products from the API
+                function addToCart(productID,productName,discountAmount,discountPrice,productPrice,imageURL) {
+                const userID = 1; // Replace with the actual user ID if needed
+                const numProducts = 1; // You can modify this if you want to add more than one
+                const totalPrice =  discountPrice * numProducts;
+                //console.log(productPrice);
+                console.log(totalPrice);
+    
+                fetch('/addtocart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                    body: JSON.stringify({
+                        userID:1,
+                        productID:productID,
+                        productName:productName,
+                        numProducts:1,
+                        totalPrice:totalPrice,
+                        imageURL:imageURL,
+                    }),
+                })
+                    .then(response => {
+                        if (response.status === 201) {
+                            alert(`Added ${productName} to the cart successfully`);
+                        } else {
+                            alert(response.error);
+                        }
+                    })
+                    .catch(error => console.error('Error adding to cart:', error));
+            }
+    
+                function fetchProducts() {
+                    // Replace 'apiEndpoint' with your actual API endpoint
+                    fetch('/products')
+                        .then(response => response.json())
+                        .then(products => {
+                            const ProductList = document.getElementById('product-list');
+                            products.forEach(product => {
+                                const listItem = document.createElement('li');
+                                listItem.innerHTML = `
+                                    <div class="product-box">
+                                    <h2>Product name: ${product.productName}</h2>
+                                    <img src="${product.imageURL}" alt="Product Image" width="150" height="100">
+                                    <p>Description: ${product.productDescription}</p>
+                                    <div class="product-price">
+                                        <p>Original Price: $${product.productPrice}</p>
+                                        <p>Discounted Price: $${product.discountPrice}</p>
+                                        <p>Discount: ${product.discountAmount}%</p>
+                                    </div>
+                                    <button id="add-to-cart">Add to Cart</button>
+                                    </div>
+                                `;
+                                let addToCartClickCount = 0;
+                                const addToCartButton = listItem.querySelector('#add-to-cart');
+                                addToCartButton.addEventListener('click', () => {
+                                    addToCartClickCount++;
+    
+                                    if (addToCartClickCount > 2) {
+                                        alert('You have already added this product twice to your cart. To add more, please visit your cart.');
+                                    } else {
+                                        addToCart(product.productID,product.productName,product.discountAmount,product.discountPrice,product.productPrice,product.imageURL);
+                                    }
+                                });
+    
+            
+                                ProductList.appendChild(listItem);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching products:', error));
+                }
+                
+                function filterDiscountedProducts() {
+                    fetch('/discountedproducts')
+                        .then(response => response.json())
+                        .then(discountedProducts => {
+                            const ProductList = document.getElementById('product-list');
+                            ProductList.innerHTML = ''; // Clear the existing product list
+
+                            discountedProducts.forEach(product => {
+                                const listItem = document.createElement('li');
+                                listItem.innerHTML = `
+                                    <div class="product-box">
+                                        <h2>Product name: ${product.productName}</h2>
+                                        <img src="${product.imageURL}" alt="Product Image" width="150" height="100">
+                                        <p>Description: ${product.productDescription}</p>
+                                        <div class="product-price">
+                                            <p>Original Price: $${product.productPrice}</p>
+                                            <p>Discounted Price: $${product.discountPrice}</p>
+                                            <p>Discount: ${product.discountAmount}%</p>
+</p>
+                                        </div>
+                                        <button class="add-to-cart">Add to Cart</button>
+                                    </div>
+                                `;
+                                // Add an event listener to the "Add to Cart" button
+                                const addToCartButton = listItem.querySelector('.add-to-cart');
+                                addToCartButton.addEventListener('click', () => {
+                                    addToCart(product.productID,product.productName,product.discountAmount,product.discountPrice,product.productPrice,product.imageURL);
+                                });
+
+                                ProductList.appendChild(listItem);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching discounted products:', error));
+                }
+
+            // fetchProducts();
+        </script>
+            
+        
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+productName,productDescription,discountCategory,discountAmount,discountPrice,productPrice,imageURL
+ZenFlex Stretching Strap,Improves flexibility and range of motion,ENABLED,10,11.655,12.95,assets/stretching_strap.jpg
+AquaZoom Waterproof Camera,Capture underwater moments with ease,DISABLED,0,79.99,79.99,assets/waterproof_camera.jpg
+PulseGlow LED Desk Lamp,Adjustable brightness for optimal lighting,ENABLED,15,25.4575,29.95,assets/desk_lamp.jpg
+NebulaShade Beach Umbrella,Provides shade for a relaxing beach day,DISABLED,0,18.5,18.5,assets/beach_umbrella.jpg
+QuantumSpark Smart Light Bulb,Smart LED bulb with customizable lighting,ENABLED,10,15.291,16.99,assets/light_bulb.jpg
+ArcticBlast Cooling Towel,Instant cooling for workouts and outdoor activities,DISABLED,0,8.99,8.99,assets/cooling_towel.jpg
+PulsePunch Fitness Gloves,Protective gloves for intense workouts,ENABLED,12,11,12.5,assets/fitness_gloves.jpg
+MysticMist Humidifier,Ultrasonic humidifier for improved air quality,DISABLED,0,22.99,22.99,assets/humidifier.jpg
+TitanGrip Phone Holder,Adjustable phone holder for hands-free use,ENABLED,8,7.3508,7.99,assets/phone_holder.jpg
+SkyPod Drone Explorer,Compact drone for aerial exploration,DISABLED,0,89.99,89.99,assets/drone.jpg
+SolarBurst Solar String Lights,Decorative solar-powered lights for outdoor use,ENABLED,15,14.4075,16.95,assets/solar_string_lights.jpg
+DynamicPulse Wireless Earbuds,High-quality audio for an immersive experience,DISABLED,0,49.99,49.99,assets/wireless_earbuds.jpg
+HydroGlow Facial Cleanser,Gentle and effective skincare,ENABLED,15,25.4575,29.95,assets/facial_cleanser.jpg
+QuantumFlex Yoga Mat,Flexible and non-slip surface for yoga practice,DISABLED,0,32.5,32.5,assets/yoga_mat.jpg
+SolarCharge Portable Charger,Solar-powered device charging on the go,ENABLED,20,31.96,39.95,assets/portable_charger.jpg
+AquaPure Water Bottle,Leak-proof and BPA-free hydration companion,DISABLED,0,12.99,12.99,assets/water_bottle.jpg
+FlexiSculpt Exercise Ball,Strengthen core muscles and improve posture,ENABLED,12,18.92,21.5,assets/exercise_ball.jpg
+LunaLight Reading Lamp,Adjustable brightness for comfortable reading,DISABLED,0,19.99,19.99,assets/reading_lamp.jpg
+PuraSleep Memory Foam Pillow,Supportive and hypoallergenic for a good night's sleep,ENABLED,18,24.5918,29.99,assets/pillow.jpg
+ZenVibe Aromatherapy Diffuser,Ultrasonic technology for a calming aromatherapy experience,ENABLED,25,14.9625,19.95,assets/diffuser.jpg
+TitanTrek Backpack,Durable and spacious for outdoor adventures,DISABLED,0,45,45,assets/backpack.jpg
+QuantumWave Fitness Tracker,Tracks activity and monitors heart rate,ENABLED,15,46.7415,54.99,assets/fitness_tracker.jpg
+SparkPod Coffee Maker,Compact and efficient coffee brewing,DISABLED,0,34.5,34.5,assets/coffee_maker.jpg
+EcoHarmony Bamboo Toothbrush Set,Eco-friendly and biodegradable oral care,ENABLED,10,9.891,10.99,assets/toothbrush_set.jpg
+RadiantRest Weighted Blanket,Deep pressure stimulation for better sleep,DISABLED,0,54.99,54.99,assets/weighted_blanket.jpg
+TerraTech Portable Grill,Compact and efficient for outdoor cooking,DISABLED,0,39.95,39.95,assets/portable_grill.jpg
+SolarBurst Outdoor Lantern,Solar-powered illumination for camping,ENABLED,25,17.2425,22.99,assets/lantern.jpg
+NimbusSense Air Purifier,Removes allergens and odors from the air,ENABLED,10,38.691,42.99,assets/air_purifier.jpg
+SwiftSlice Mandoline Slicer,Effortless slicing for kitchen efficiency,DISABLED,0,24.95,24.95,assets/mandoline_slicer.jpg
+LunaLuxe Sleep Mask,Gentle on the eyes for a better night's sleep,ENABLED,18,11.89,14.5,assets/sleep_mask.jpg
+NovaNourish Meal Prep Containers,Convenient and durable for meal planning,ENABLED,15,16.1075,18.95,assets/meal_prep.jpg
+SparkWave Bluetooth Speaker,Wireless and portable for on-the-go entertainment,DISABLED,0,29.99,29.99,assets/bluetooth_speaker.jpg
+QuantumElite 8K Smart TV,Ultra-high definition for an immersive viewing experience,ENABLED,15,2124.9915,2499.99,assets/tv.jpg
+LunarPulse Refrigerator,Luxury refrigerator with advanced cooling technology,DISABLED,0,2999.95,2999.95,assets/fridge.jpg
+NovaTech Pro Camera Kit,Professional-grade camera with advanced features,ENABLED,18,1557.9918,1899.99,assets/camera_kit.jpg
+QuantumBeam Home Theater System,Premium sound quality for an exceptional home cinema experience,ENABLED,20,1279.96,1599.95,assets/home_theater.jpg
+TitanStream 4K Video Drone,High-resolution aerial footage and advanced stabilization,DISABLED,0,1799.5,1799.5,assets/drone.jpg
+PulsePower Pro Treadmill,State-of-the-art treadmill with advanced fitness tracking,ENABLED,15,2804.575,3299.5,assets/treadmill.jpg
+EclipseVision 3D VR Headset,Immersive virtual reality experience with high-resolution display,DISABLED,0,899.99,899.99,assets/vr.jpg
+LuxeLeather Designer Jacket,High-quality leather jacket with a stylish design,ENABLED,20,399.96,499.95,assets/jacket.jpg
+ElegantSilk Evening Gown,Luxurious silk gown for special occasions,DISABLED,0,599.99,599.99,assets/gown.jpg
+UrbanChic Cashmere Sweater,Soft and warm cashmere sweater for winter,ENABLED,15,212.4915,249.99,assets/sweater.jpg
+TimelessTuxedo Suit,Classic tuxedo suit for formal events,DISABLED,0,399.95,399.95,assets/tuxedo.jpg
+GlamourGlow Diamond Necklace,Exquisite diamond necklace for a touch of luxury,ENABLED,18,737.59,899.5,assets/necklace.jpg
+EliteAthlete Performance Shoes,High-performance athletic shoes for elite athletes,DISABLED,0,179.99,179.99,assets/shoes.jpg
+FashionFusion Smartwatch,Stylish smartwatch with advanced fashion and tech features,ENABLED,12,290.3912,329.99,assets/applewatch.jpg
+Trendsetter Denim Jeans,Fashion-forward denim jeans with a trendy design,DISABLED,0,129.95,129.95,assets/jeans.jpg
+ChicCouture Handbag,Luxurious handbag crafted with attention to detail,ENABLED,20,359.992,449.99,assets/handbag.jpg
+SilkElegance Sleepwear Set,Comfortable silk sleepwear set for a restful night,ENABLED,15,127.4575,149.95,assets/pj.jpg
