@@ -4,7 +4,7 @@ const http = require('http');
 let ratings = [];
 
 const server = http.createServer((req, res) => {
-    if (req.method === 'POST' && req.url === '/store-rating') {
+    if (req.method === 'POST' && req.url === 'http://localhost:3002/store-rating') {
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
